@@ -17,26 +17,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Framework\MVC\Controller;
+
 /**
- * Default config
+ * Description of ControllerInterface
  *
  * @author cagatay
  */
-return array(
-    'service_manager' => array(
-        'aliases' => array(
-            'Configuration' => 'Framework\Services\ConfigService',
-            'Router' => 'Framework\MVC\Router\Router',
-        ),
-        'factories' => array(
-            'ControllerManager' => 'Framework\MVC\Controller\ControllerManagerFactory'
-        )
-    ),
-    'routes' => array(
-    ),
-    'controllers' => array(
-        'aliases' => array(
-        ),
-        'factories' => array()
-    )
-);
+use Framework\MVC\Router\Params;
+
+interface ControllerInterface {
+
+    public function setParams(Params $params);
+}

@@ -17,26 +17,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Framework\MVC\Response;
+
 /**
- * Default config
+ * Description of HttpResponse
  *
  * @author cagatay
  */
-return array(
-    'service_manager' => array(
-        'aliases' => array(
-            'Configuration' => 'Framework\Services\ConfigService',
-            'Router' => 'Framework\MVC\Router\Router',
-        ),
-        'factories' => array(
-            'ControllerManager' => 'Framework\MVC\Controller\ControllerManagerFactory'
-        )
-    ),
-    'routes' => array(
-    ),
-    'controllers' => array(
-        'aliases' => array(
-        ),
-        'factories' => array()
-    )
-);
+class Response implements ResponseInterface {
+
+    protected $statusCode;
+    protected $content;
+
+    public function setStatusCode($code) {
+        $this->statusCode = $code;
+    }
+
+    public function getStatusCode() {
+        return $this->statusCode;
+    }
+
+    public function setContent($content) {
+        $this->content = $content;
+    }
+
+    public function getContent() {
+        return $this->content;
+    }
+
+}

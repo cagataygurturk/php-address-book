@@ -17,26 +17,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Framework\MVC;
+
 /**
- * Default config
+ * Description of Application
  *
  * @author cagatay
  */
-return array(
-    'service_manager' => array(
-        'aliases' => array(
-            'Configuration' => 'Framework\Services\ConfigService',
-            'Router' => 'Framework\MVC\Router\Router',
-        ),
-        'factories' => array(
-            'ControllerManager' => 'Framework\MVC\Controller\ControllerManagerFactory'
-        )
-    ),
-    'routes' => array(
-    ),
-    'controllers' => array(
-        'aliases' => array(
-        ),
-        'factories' => array()
-    )
-);
+interface ApplicationInterface {
+
+    /**
+     * Run the application
+     *
+     * @return self
+     */
+    public function run();
+
+    /**
+     * Get the locator object
+     *
+     * @return \Framework\ServiceManager\ServiceManagerInterface
+     */
+    public function getServiceManager();
+
+    /**
+     * Get Response
+     *
+     * @return \Framework\MVC\Response\Response
+     */
+    public function getResponse();
+}

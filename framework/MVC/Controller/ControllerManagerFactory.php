@@ -17,26 +17,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Framework\MVC\Controller;
+
 /**
- * Default config
+ * Description of ControllerManager
  *
  * @author cagatay
  */
-return array(
-    'service_manager' => array(
-        'aliases' => array(
-            'Configuration' => 'Framework\Services\ConfigService',
-            'Router' => 'Framework\MVC\Router\Router',
-        ),
-        'factories' => array(
-            'ControllerManager' => 'Framework\MVC\Controller\ControllerManagerFactory'
-        )
-    ),
-    'routes' => array(
-    ),
-    'controllers' => array(
-        'aliases' => array(
-        ),
-        'factories' => array()
-    )
-);
+use Framework\ServiceManager\FactoryInterface;
+use Framework\ServiceManager\ServiceManagerInterface;
+
+class ControllerManagerFactory implements FactoryInterface {
+
+    public function getService(ServiceManagerInterface $sm) {
+        $configuration = $sm->get('Configuration');
+        return new ControllerManager($configuration);
+    }
+
+}
