@@ -1,6 +1,6 @@
 <?php
 
-namespace FrameworkTest\Services;
+namespace FrameworkTest\MVC\Router;
 
 use PHPUnit_Framework_TestCase;
 
