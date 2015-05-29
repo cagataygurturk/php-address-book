@@ -25,13 +25,21 @@ namespace Framework\MVC\Controller;
  * @author cagatay
  */
 use Framework\Services\ConfigurationServiceInterface;
+use Framework\ServiceManager\FactoryInterface;
+use Framework\ServiceManager\ServiceManagerInterface;
 
 class ControllerManager implements ControllerManagerInterface {
 
     private $configurationService;
+    protected $serviceManager;
 
-    public function __construct(ConfigurationServiceInterface $configurationService) {
+    public function __construct(ConfigurationServiceInterface $configurationService, ServiceManagerInterface $serviceManager) {
         $this->configurationService = $configurationService;
+        $this->serviceManager = $serviceManager;
+    }
+
+    protected function getServiceManager() {
+        return $this->serviceManager;
     }
 
     private function getConfig() {
@@ -61,7 +69,7 @@ class ControllerManager implements ControllerManagerInterface {
             if (!($factory instanceof FactoryInterface)) {
                 throw new \Framework\Exception\ServiceException($class . ' not implements FactoryInterface');
             }
-            $object = $factory->getService($this);
+            $object = $factory->getService($this->getServiceManager());
             if ($object instanceof $class) {
                 throw new \Framework\Exception\ServiceException('Object returned by Factory class is not an instance of ' . $class);
             }

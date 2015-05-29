@@ -17,24 +17,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Framework\MVC\Controller;
+namespace FrameworkTest\Helpers;
 
 /**
- * Description of ServiceManagerInterface
+ * Description of MockServiceFactory
  *
  * @author cagatay
  */
-use Framework\Services\ConfigurationServiceInterface;
+use Framework\ServiceManager\FactoryInterface;
 use Framework\ServiceManager\ServiceManagerInterface;
 
-interface ControllerManagerInterface {
+class MockControllerFactory implements FactoryInterface {
 
-    public function __construct(ConfigurationServiceInterface $configurationService, ServiceManagerInterface $serviceManager);
+    public function getService(ServiceManagerInterface $sm) {
+        return new MockController();
+    }
 
-    /**
-     * Get controller by name
-     *
-     * @return ControllerInterface
-     */
-    public function get($controllerName);
 }

@@ -17,24 +17,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Framework\MVC\Controller;
+namespace FrameworkTest\Helpers;
 
 /**
- * Description of ServiceManagerInterface
+ * Description of MockService
  *
  * @author cagatay
  */
-use Framework\Services\ConfigurationServiceInterface;
-use Framework\ServiceManager\ServiceManagerInterface;
+use Framework\MVC\Controller\Controller;
 
-interface ControllerManagerInterface {
+class MockController extends Controller {
 
-    public function __construct(ConfigurationServiceInterface $configurationService, ServiceManagerInterface $serviceManager);
+    public function testAction() {
+        return array();
+    }
 
-    /**
-     * Get controller by name
-     *
-     * @return ControllerInterface
-     */
-    public function get($controllerName);
 }

@@ -31,7 +31,7 @@ class ControllerManagerFactory implements FactoryInterface {
 
     public function getService(ServiceManagerInterface $sm) {
         $configuration = $sm->get('Configuration');
-        return new ControllerManager($configuration);
+        return new ControllerManager($configuration, $sm);
     }
 
 }
