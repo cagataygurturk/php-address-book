@@ -1,0 +1,21 @@
+{
+    "name": "cagataygurturk/challenge",
+    "description": "The solution for a challenge",
+    "authors": [
+        {
+            "name": "Cagatay Gurturk",
+            "email": "info@cagataygurturk.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Framework": "./",
+            "Application": "./",
+            "FrameworkTest": "./test"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "require": {}
+}
