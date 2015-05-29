@@ -30,6 +30,14 @@ class Bootstrap {
                 'aliases' => array(
                     'MockService' => 'FrameworkTest\Helpers\MockService'
                 )
+            ),
+            'controllers' => array(
+                'factories' => array(
+                    'MockControllerByFactory' => 'FrameworkTest\Helpers\MockControllerFactory'
+                ),
+                'aliases' => array(
+                    'MockController' => 'FrameworkTest\Helpers\MockController'
+                )
             )
         ));
         $configurationService = new ConfigurationService();
