@@ -16,18 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+namespace Framework\MVC\Request;
 
 /**
- * Default config
+ * Description of RequestInterface
  *
  * @author cagatay
  */
-return array(
-    'service_manager' => array(
-        'aliases' => array(
-            'Configuration' => 'Framework\Services\ConfigService',
-            'Router' => 'Framework\MVC\Router\Router'
-        ),
-        'factories' => array()
-    )
-);
+interface RequestInterface {
+    
+}

@@ -36,7 +36,8 @@ class ServiceManager implements ServiceManagerInterface {
     }
 
     private function getConfig() {
-        return $this->configurationService->getConfig();
+        $configuration = $this->configurationService->getConfig();
+        return $configuration['service_manager'];
     }
 
     public function get($serviceName) {

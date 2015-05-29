@@ -18,16 +18,17 @@
  */
 
 /**
- * Default config
+ * Description of RouterFactory
  *
  * @author cagatay
  */
-return array(
-    'service_manager' => array(
-        'aliases' => array(
-            'Configuration' => 'Framework\Services\ConfigService',
-            'Router' => 'Framework\MVC\Router\Router'
-        ),
-        'factories' => array()
-    )
-);
+class RouterFactory implements Framework\ServiceManager\FactoryInterface {
+
+    public function getService(\Framework\ServiceManager\ServiceManagerInterface $sm) {
+        $config = $sm->get('Configuration');
+        $router = new Framework\MVC\Router\Router();
+        $router->addRoutes($config['router']);
+        return $router;
+    }
+
+}

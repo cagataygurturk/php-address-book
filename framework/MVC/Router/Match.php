@@ -17,17 +17,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Framework\MVC\Router;
+
 /**
- * Default config
+ * Description of Match
  *
  * @author cagatay
  */
-return array(
-    'service_manager' => array(
-        'aliases' => array(
-            'Configuration' => 'Framework\Services\ConfigService',
-            'Router' => 'Framework\MVC\Router\Router'
-        ),
-        'factories' => array()
-    )
-);
+class Match {
+
+    protected $controller;
+    protected $action;
+    protected $params;
+
+    public function __construct($controller, $action, array $params = array()) {
+        $this->controller = $controller;
+        $this->action = $action;
+        $this->params = new Params($params);
+    }
+
+    public function getController() {
+        return $this->controller;
+    }
+
+    public function getAction() {
+        return $this->action;
+    }
+
+    public function getParams() {
+        return $this->params;
+    }
+
+}
