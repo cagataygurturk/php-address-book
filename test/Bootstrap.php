@@ -22,12 +22,14 @@ class Bootstrap {
     public static function init() {
         $config = self::getConfig();
 
-        $testServiceConfig = array_merge_recursive($config['service_manager'], array(
-            'factories' => array(
-                'MockServiceByFactory' => 'FrameworkTest\Helpers\MockServiceFactory'
-            ),
-            'aliases' => array(
-                'MockService' => 'FrameworkTest\Helpers\MockService'
+        $testServiceConfig = array_merge_recursive($config, array(
+            'service_manager' => array(
+                'factories' => array(
+                    'MockServiceByFactory' => 'FrameworkTest\Helpers\MockServiceFactory'
+                ),
+                'aliases' => array(
+                    'MockService' => 'FrameworkTest\Helpers\MockService'
+                )
             )
         ));
         $configurationService = new ConfigurationService();
