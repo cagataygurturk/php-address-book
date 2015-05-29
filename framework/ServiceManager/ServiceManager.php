@@ -24,20 +24,27 @@ namespace Framework\ServiceManager;
  *
  * @author cagatay
  */
+use Framework\Services\ConfigurationServiceInterface;
+
 class ServiceManager implements ServiceManagerInterface {
 
     private $instances = array();
-    private $config;
+    private $configurationService;
 
-    public function __construct(array $config) {
-        $this->config = $config;
+    public function __construct(ConfigurationServiceInterface $configurationService) {
+        $this->configurationService = $configurationService;
     }
 
     private function getConfig() {
-        return $this->config;
+        return $this->configurationService->getConfig();
     }
 
     public function get($serviceName) {
+
+        if ('Configuration' == $serviceName) {
+            return $this->configurationService;
+        }
+
         if (isset($this->instances[$serviceName])) {
             return $this->instances[$serviceName]; //Service already created, then return it
         }
@@ -64,8 +71,11 @@ class ServiceManager implements ServiceManagerInterface {
             }
         }
 
-        $this->instances[$serviceName] = $object;
-        return $object;
+        if ($object) {
+            $this->instances[$serviceName] = $object;
+            return $object;
+        }
+        throw new \Framework\Exception\ServiceException('Service named ' . $serviceName . ' not found');
     }
 
 }

@@ -17,18 +17,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Framework\ServiceManager;
+namespace Framework\Services;
 
 /**
- * Description of ServiceManagerInterface
+ * Description of ConfigService
  *
  * @author cagatay
  */
-use Framework\Services\ConfigurationServiceInterface;
+class ConfigurationService implements ConfigurationServiceInterface {
 
-interface ServiceManagerInterface {
+    private $config;
+    private $defaultConfiguration;
 
-    public function __construct(ConfigurationServiceInterface $configurationService);
+    public function __construct() {
+        $this->defaultConfiguration = require __DIR__ . '/../config.php'; //Internal configuration
+        $this->config = $this->defaultConfiguration;
+    }
 
-    public function get($serviceName);
+    public function getConfig() {
+        return $this->config;
+    }
+
+    public function setConfig(array $config) {
+        $this->config = array_merge_recursive($this->defaultConfiguration, $config);
+    }
+
 }

@@ -17,18 +17,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Framework\ServiceManager;
-
 /**
- * Description of ServiceManagerInterface
+ * Default config
  *
  * @author cagatay
  */
-use Framework\Services\ConfigurationServiceInterface;
-
-interface ServiceManagerInterface {
-
-    public function __construct(ConfigurationServiceInterface $configurationService);
-
-    public function get($serviceName);
-}
+return array(
+    'service_manager' => array(
+        'aliases' => array(
+            'Configuration' => 'Framework\Services\ConfigService'
+        ),
+        'factories' => array()
+    )
+);
