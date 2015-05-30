@@ -11,9 +11,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testMatchRoute() {
-        $serviceManager = \Bootstrap::getServiceManager();
-        $router = $serviceManager->get('Router');
-        $this->assertInstanceOf('\Framework\MVC\Router\RouterInterface', $router);
+        $router = new \Framework\MVC\Router\Router();
 
         $router->addRoutes(array(
             array('/people', 'people', null),

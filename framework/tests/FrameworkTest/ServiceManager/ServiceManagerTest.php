@@ -4,18 +4,17 @@ namespace FrameworkTest\ServiceManager;
 
 use PHPUnit_Framework_TestCase;
 
-class PersonTest extends PHPUnit_Framework_TestCase {
+class PersonTest extends \FrameworkTest\TestCase {
 
     public function setUp() {
         parent::setUp();
     }
 
     public function testGetService() {
-        $serviceManager = \Bootstrap::getServiceManager();
+        $serviceManager = $this->getServiceManager();
         $this->assertInstanceOf('Framework\ServiceManager\ServiceManagerInterface', $serviceManager);
 
         $mockServiceClass = 'FrameworkTest\Helpers\MockService2';
-
 
         $mockService = $serviceManager->get('FrameworkTest\Helpers\MockService2');
         $this->assertInstanceOf($mockServiceClass, $mockService);

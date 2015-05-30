@@ -4,14 +4,14 @@ namespace FrameworkTest\MVC\Controller;
 
 use PHPUnit_Framework_TestCase;
 
-class ControllerManagerTest extends PHPUnit_Framework_TestCase {
+class ControllerManagerTest extends \FrameworkTest\TestCase {
 
     public function setUp() {
         parent::setUp();
     }
 
     public function testGetController() {
-        $serviceManager = \Bootstrap::getServiceManager();
+        $serviceManager = $this->getServiceManager();
         $controllerManager = $serviceManager->get('ControllerManager');
 
 
