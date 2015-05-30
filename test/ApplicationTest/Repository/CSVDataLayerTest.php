@@ -1,6 +1,6 @@
 <?php
 
-namespace ApplicationTest\Model;
+namespace ApplicationTest\Repository;
 
 use PHPUnit_Framework_TestCase;
 
@@ -22,7 +22,7 @@ class CSVDataLayerTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testGetAllRows() {
-        $dataReader = new \Application\DAL\CSVDataLayer($this->config);
+        $dataReader = new \Application\Repository\CSVDataLayer($this->config);
         $allrows = $dataReader->getAllRows();
         $firstObject = $allrows[0];
         $this->assertInstanceOf('\Application\Model\Entity', $firstObject);
@@ -33,7 +33,7 @@ class CSVDataLayerTest extends PHPUnit_Framework_TestCase {
 
     public function testGetFindRowAll() {
         $nameToSearch = 'Marcin';
-        $dataReader = new \Application\DAL\CSVDataLayer($this->config);
+        $dataReader = new \Application\Repository\CSVDataLayer($this->config);
         $allrows = $dataReader->findByCriteria(array('name' => $nameToSearch), null);
         $this->assertEquals(2, count($allrows));
         $firstObject = $allrows[0];
@@ -43,7 +43,7 @@ class CSVDataLayerTest extends PHPUnit_Framework_TestCase {
 
     public function testGetFindRowOne() {
         $nameToSearch = 'Marcin';
-        $database = new \Application\DAL\CSVDataLayer($this->config);
+        $database = new \Application\Repository\CSVDataLayer($this->config);
         $allrows = $database->findByCriteria(array('name' => $nameToSearch), 1);
         $this->assertEquals(1, count($allrows));
         $firstObject = $allrows[0];
@@ -52,7 +52,7 @@ class CSVDataLayerTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testAddObject() {
-        $database = new \Application\DAL\CSVDataLayer($this->config);
+        $database = new \Application\Repository\CSVDataLayer($this->config);
 
         $person = new \Application\Model\Person();
         $name = 'Cagatay';
@@ -72,7 +72,7 @@ class CSVDataLayerTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testDeleteObject() {
-        $database = new \Application\DAL\CSVDataLayer($this->config);
+        $database = new \Application\Repository\CSVDataLayer($this->config);
 
         $person = new \Application\Model\Person();
         $name = 'Cagatay';

@@ -1,6 +1,6 @@
 <?php
 
-namespace ApplicationTest\Factories;
+namespace ApplicationTest\MVC\Factories;
 
 use PHPUnit_Framework_TestCase;
 
