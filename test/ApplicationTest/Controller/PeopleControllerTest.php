@@ -1,6 +1,6 @@
 <?php
 
-namespace FrameworkTest\Services;
+namespace ApplicationTest\Services;
 
 use FrameworkTest\Helpers\AbstractHttpTestCase;
 
