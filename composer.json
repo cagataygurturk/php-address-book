@@ -9,10 +9,10 @@
     ],
     "autoload": {
         "psr-4": {
-            "Framework\\": "./framework",
-            "Application\\": "./application",
-            "ApplicationTest\\": "./test/ApplicationTest",
-            "FrameworkTest\\": "./test/FrameworkTest"
+            "Framework\\": "./framework/src",
+            "Application\\": "./application/src",
+            "ApplicationTest\\": "./application/tests/ApplicationTest",
+            "FrameworkTest\\": "./framework/tests/FrameworkTest"
         }
     },
     "require-dev": {

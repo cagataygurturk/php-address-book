@@ -17,20 +17,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Application\Factories;
+namespace Application\MVC\Factories;
 
 /**
- * Description of PersonServiceFactory
+ * Framework-specific factory for PersonService
+ * See comments in Application\Services\Factories\PersonServiceFactory
  *
  * @author cagatay
  */
 use Framework\ServiceManager\ServiceManagerInterface;
 use Framework\ServiceManager\FactoryInterface;
-use Application\Services\PersonService;
 use Application\Services\PersonServiceInterface;
 use Framework\Exception\InvalidArgumentException;
 
-class PersonServiceFactory implements FactoryInterface {
+class PersonServiceFactory extends \Application\Services\Factories\PersonServiceFactory implements FactoryInterface {
 
     /**
      * Get an instance of PersonService
@@ -40,7 +40,6 @@ class PersonServiceFactory implements FactoryInterface {
     public function getService(ServiceManagerInterface $sm) {
         $config = $sm->get('Configuration')->getConfig();
 
-
         if (!$config['data_reader']['adapter']) {
             throw new InvalidArgumentException('Set data adapter in config');
         }
@@ -48,14 +47,15 @@ class PersonServiceFactory implements FactoryInterface {
             throw new InvalidArgumentException('Selector adaptor not exists: ' . $config['data_reader']['adapter']);
         }
 
-
-        $adapter = new $config['data_reader']['adapter']($config['data_reader']['adapter_config']);
-        if (!$adapter instanceof \Application\DAL\DataLayerInterface) {
+        $repositoryService = new $config['data_reader']['adapter']($config['data_reader']['adapter_config']);
+        if (!$repositoryService instanceof \Application\Repository\RepositoryInterface) {
             throw new InvalidArgumentException('Selector adaptor should implement DataLayerInterface');
         }
 
-        $service = new PersonService($adapter);
-        return $service;
+
+        $this->setRepositoryService($repositoryService);
+
+        return parent::createService();
     }
 
 }

@@ -14,7 +14,7 @@ class Bootstrap {
 
     protected static function getConfig() {
         if (!self::$config) {
-            self::$config = require(__DIR__ . '/../application/MVC/config.php');
+            self::$config = require(__DIR__ . '/../application/src/MVC/config.php');
         }
         return self::$config;
     }
@@ -56,4 +56,4 @@ class Bootstrap {
 
 }
 
-Bootstrap::init();
+\Bootstrap::init();

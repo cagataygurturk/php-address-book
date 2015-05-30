@@ -17,28 +17,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Application\Services;
+namespace Application\MVC\Factories;
 
 /**
- * IPersonServicee
+ * Description of PersonServiceFactory
  *
  * @author cagatay
  */
-interface PersonServiceInterface {
+use Framework\ServiceManager\ServiceManagerInterface;
+use Framework\ServiceManager\FactoryInterface;
+use Application\Services\PersonServiceInterface;
+use Application\MVC\Controller\PeopleController;
+
+class PeopleControllerFactory implements FactoryInterface {
 
     /**
-     * Get person by given Id
-     * Used for related titles
+     * Get an instance of PersonService
      *
-     * @return \Application\Model\Person
+     * @return PersonServiceInterface
      */
-    public function searchPersonById($id);
+    public function getService(ServiceManagerInterface $sm) {
+        $personService = $sm->get('Application\Services\PersonService');
+        $personController = new PeopleController($personService);
+        return $personController;
+    }
 
-    /**
-     * Get all people
-     * 
-     *
-     * @return array
-     */
-    public function getAllPeople();
 }

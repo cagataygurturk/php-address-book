@@ -17,29 +17,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Application\Services;
+namespace Application\Services\Factories;
 
 /**
- * Description of PersonService
+ * This is Factory Interface for Service Layer
  *
  * @author cagatay
  */
-use Application\DAL\DataLayerInterface;
+interface FactoryInterface {
 
-class PersonService implements PersonServiceInterface {
-
-    protected $database;
-
-    public function __construct(DataLayerInterface $database) {
-        $this->database = $database;
-    }
-
-    public function searchPersonById($id) {
-        return null;
-    }
-
-    public function getAllPeople() {
-        return $this->database->getAllRows();
-    }
-
+    public function createService();
 }

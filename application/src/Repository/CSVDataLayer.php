@@ -17,14 +17,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Application\DAL;
+namespace Application\Repository;
 
 /**
  * Description of CSVDataReader
  *
  * @author cagatay
  */
-class CSVDataLayer implements DataLayerInterface {
+class CSVDataLayer implements RepositoryInterface {
 
     protected $config;
 

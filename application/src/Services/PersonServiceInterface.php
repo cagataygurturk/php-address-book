@@ -17,36 +17,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Application\Controller;
+namespace Application\Services;
 
 /**
- * Description of PeopleController
+ * IPersonServicee
  *
  * @author cagatay
  */
-use Framework\MVC\Controller\RESTfulController;
-use Framework\MVC\ViewModel\JSONViewModel;
-use Application\Services\PersonService;
+use Application\Repository\RepositoryInterface;
 
-class PeopleController extends RESTfulController {
+interface PersonServiceInterface {
 
-    protected $personService;
+    /**
+     * Get person by given Id
+     * Used for related titles
+     *
+     * @return \Application\Model\Person
+     */
+    public function searchPersonById($id);
 
-    public function __construct(PersonService $personService) {
-        $this->personService = $personService;
-    }
+    /**
+     * Get all people
+     * 
+     *
+     * @return array
+     */
+    public function getAllPeople();
 
-    public function get($id) {
-        try {
-
-            $people = $this->personService->getAllPeople();
-
-            return new JSONViewModel(
-                    array('people' => $people)
-            );
-        } catch (\Exception $ex) {
-            $this->error($ex);
-        }
-    }
-
+    public function setRepositoryService(RepositoryInterface $database);
 }

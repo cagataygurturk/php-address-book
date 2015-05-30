@@ -5,13 +5,13 @@ return array(
     'service_manager' => array(
         'aliases' => array(),
         'factories' => array(
-            'PersonService' => 'Application\Factories\PersonServiceFactory'
+            'Application\Services\PersonService' => 'Application\MVC\Factories\PersonServiceFactory'
         )
     ),
     'data_reader' => array(
-        'adapter' => 'Application\DAL\CSVDataLayer',
+        'adapter' => 'Application\Repository\CSVDataLayer',
         'adapter_config' => array(
-            'file' => __DIR__ . '/../data/example.csv',
+            'file' => __DIR__ . '/../../../data/example.csv',
             'hydrate_to_object' => 'Application\Model\Person',
             'fields' => array(
                 'name',
@@ -21,14 +21,14 @@ return array(
         )
     ),
     'routes' => array(
-        array('/people', 'PeopleController', 'rest'),
-        array('/people/[i:id]', 'PeopleController', 'rest'),
+        array('/people', 'Application\MVC\Controller\PeopleController', 'rest'),
+        array('/people/[i:id]', 'Application\MVC\Controller\PeopleController', 'rest'),
     ),
     'controllers' => array(
-        'aliases' => array(
+        'invokables' => array(
         ),
         'factories' => array(
-            'PeopleController' => 'Application\Factories\PeopleControllerFactory'
+            'Application\MVC\Controller\PeopleController' => 'Application\MVC\Factories\PeopleControllerFactory'
         )
     )
 );

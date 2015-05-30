@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Application\DAL;
+namespace Application\Repository;
 
 /**
  * Description of DataReaderInterface
@@ -26,7 +26,7 @@ namespace Application\DAL;
  */
 use Application\Model\Entity;
 
-interface DataLayerInterface {
+interface RepositoryInterface {
 
     public function __construct(array $config);
 

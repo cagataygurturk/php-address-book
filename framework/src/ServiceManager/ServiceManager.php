@@ -102,6 +102,7 @@ class ServiceManager implements ServiceManagerInterface {
             $this->instances[$serviceName] = $object;
             return $object;
         }
+        print_r($config);
         throw new \Framework\Exception\ServiceException('Service named ' . $serviceName . ' not found');
     }
 

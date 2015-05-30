@@ -17,29 +17,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Application\Factories;
+namespace Application\MVC\Controller;
 
 /**
- * Description of PersonServiceFactory
+ * Description of PeopleController
  *
  * @author cagatay
  */
-use Framework\ServiceManager\ServiceManagerInterface;
-use Framework\ServiceManager\FactoryInterface;
+use Framework\MVC\Controller\RESTfulController;
+use Framework\MVC\ViewModel\JSONViewModel;
 use Application\Services\PersonServiceInterface;
-use Application\Controller\PeopleController;
 
-class PeopleControllerFactory implements FactoryInterface {
+class PeopleController extends RESTfulController {
 
-    /**
-     * Get an instance of PersonService
-     *
-     * @return PersonServiceInterface
-     */
-    public function getService(ServiceManagerInterface $sm) {
-        $personService = $sm->get('PersonService');
-        $personController = new PeopleController($personService);
-        return $personController;
+    protected $personService;
+
+    public function __construct(PersonServiceInterface $personService) {
+        $this->personService = $personService;
+    }
+
+    public function get($id) {
+        try {
+
+            $people = $this->personService->getAllPeople();
+
+            return new JSONViewModel(
+                    array('people' => $people)
+            );
+        } catch (\Exception $ex) {
+            $this->error($ex);
+        }
     }
 
 }
