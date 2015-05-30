@@ -24,19 +24,49 @@ namespace Framework\MVC\Controller;
  *
  * @author cagatay
  */
+use Framework\MVC\Request\Request;
+
 abstract class RESTfulController extends Controller {
 
+    public function restAction() {
+        switch ($this->getRequest()->getMethod()) {
+            case Request::METHOD_GET:
+                return $this->getAction();
+
+            case Request::METHOD_POST:
+                return $this->createAction();
+
+            case Request::METHOD_PUT:
+                return $this->updateAction();
+
+            case Request::METHOD_DELETE:
+                return $this->deleteAction();
+
+            case Request::METHOD_OPTIONS:
+                return $this->optionsAction();
+
+            default :
+                throw new \Framework\Exception\MethodNotAllowedHttpException();
+        }
+    }
+
+    public function optionsAction() {
+        
+    }
+
     public function getAction() {
-        if (is_callable(array($this, 'get'))) {
-            return $this->get($this->params('id'));
+        if (is_callable(array($this, 'get')) && $this->params('id') != null) {
+            return call_user_func(array($this, 'get'), $this->params('id'));
+        } else if (is_callable(array($this, 'getList')) && $this->params('id') == null) {
+            return call_user_func(array($this, 'getList'));
         } else {
             throw new \Framework\Exception\MethodNotAllowedHttpException();
         }
     }
 
-    public function getListAction() {
-        if (is_callable(array($this, 'getList'))) {
-            return $this->getList();
+    public function createAction() {
+        if (is_callable(array($this, 'create'))) {
+            return call_user_func(array($this, 'create'), $this->getRequest()->getPostParams());
         } else {
             throw new \Framework\Exception\MethodNotAllowedHttpException();
         }
@@ -44,7 +74,7 @@ abstract class RESTfulController extends Controller {
 
     public function updateAction() {
         if (is_callable(array($this, 'update'))) {
-            return $this->update($this->params('id'));
+            return call_user_func(array($this, 'update'), $this->params('id'));
         } else {
             throw new \Framework\Exception\MethodNotAllowedHttpException();
         }
@@ -52,7 +82,7 @@ abstract class RESTfulController extends Controller {
 
     public function deleteAction() {
         if (is_callable(array($this, 'delete'))) {
-            return $this->delete($this->params('id'));
+            return call_user_func(array($this, 'delete'), $this->params('id'));
         } else {
             throw new \Framework\Exception\MethodNotAllowedHttpException();
         }

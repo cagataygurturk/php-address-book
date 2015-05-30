@@ -102,19 +102,14 @@ class Router implements RouterInterface {
     /**
      * Map a route to a target
      *
-     * @param string $method One of 5 HTTP Methods, or a pipe-separated list of multiple HTTP Methods (GET|POST|PATCH|PUT|DELETE)
      * @param string $route The route regex, custom regex must start with an @. You can use multiple pre-set regex filters, like [i:id]
      * @param mixed $target The target where this route should point to. Can be anything.
      * @param string $name Optional name of this route. Supply if you want to reverse route this url in your application.
      */
-    public function map($method, $route, $target, $name = null) {
-        $this->routes[] = array($method, $route, $target, $name);
+    public function map($route, $target, $name = null) {
+        $this->routes[] = array($route, $target, $name);
         if ($name) {
-            if (isset($this->namedRoutes[$name])) {
-                throw new \Exception("Can not redeclare route '{$name}'");
-            } else {
-                $this->namedRoutes[$name] = $route;
-            }
+            $this->namedRoutes[$name] = $route;
         }
         return;
     }
@@ -155,9 +150,9 @@ class Router implements RouterInterface {
     }
 
     /**
-     * Match a given Request Url against stored routes
+     * Match a given Request  against stored routes
+     * 
      * @param string Request
-     * @param string $requestMethod
      * @return array|boolean Array with route information on success, false on failure (no match).
      */
     public function match(\Framework\MVC\Request\Request $request) {
@@ -175,19 +170,8 @@ class Router implements RouterInterface {
         // Force request_order to be GP
         // http://www.mail-archive.com/internals@lists.php.net/msg33119.html
         foreach ($this->routes as $handler) {
-            list($method, $_route, $target, $name) = $handler;
-            $methods = explode('|', $method);
-            $method_match = false;
-            // Check if request method matches. If not, abandon early. (CHEAP)
-            foreach ($methods as $method) {
-                if (strcasecmp($requestMethod, $method) === 0) {
-                    $method_match = true;
-                    break;
-                }
-            }
-            // Method did not match, continue to next route.
-            if (!$method_match)
-                continue;
+            list( $_route, $target, $name) = $handler;
+
             // Check for a wildcard (matches all)
             if ($_route === '*') {
                 $match = true;

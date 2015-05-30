@@ -46,6 +46,11 @@ abstract class Controller implements ControllerInterface {
         $this->request = $request;
     }
 
+    /**
+     * Get request
+     *
+     * @return Request
+     */
     public function getRequest() {
         return $this->request;
     }
@@ -54,6 +59,11 @@ abstract class Controller implements ControllerInterface {
         $this->response = $response;
     }
 
+    /**
+     * Get request
+     *
+     * @return Response
+     */
     public function getResponse() {
         return $this->response;
     }

@@ -37,7 +37,7 @@ interface RouterInterface {
      * @param mixed $target The target where this route should point to. Can be anything.
      * @param string $name Optional name of this route. Supply if you want to reverse route this url in your application.
      */
-    public function map($method, $route, $target, $name = null);
+    public function map($route, $target, $name = null);
 
     /**
      * Add multiple routes

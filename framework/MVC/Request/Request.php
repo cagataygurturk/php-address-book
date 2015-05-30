@@ -255,6 +255,10 @@ class Request implements RequestInterface {
         return (isset($this->postParams[$key]) ? $this->postParams[$key] : $default);
     }
 
+    public function getPostParams() {
+        return $this->postParams;
+    }
+
     public function setQuery(array $params) {
         $this->queryParams = $params;
     }
