@@ -55,9 +55,9 @@ class ControllerManager implements ControllerManagerInterface {
     public function get($controllerName) {
         $config = $this->getConfig();
         $object = null;
-        if (isset($config['aliases'][$controllerName])) {
+        if (isset($config['invokables'][$controllerName])) {
             //alias found
-            $class = $config['aliases'][$controllerName];
+            $class = $config['invokables'][$controllerName];
             $object = new $class();
         }
 
