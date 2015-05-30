@@ -26,10 +26,14 @@ namespace Framework\MVC\ViewModel;
  */
 abstract class ViewModel {
 
-    protected $data;
+    protected $data = array();
 
     public function __construct(array $data = array()) {
-        $this->data = $data;
+        $this->setData($data);
+    }
+
+    public function setData(array $array) {
+        $this->data = $array;
     }
 
 }

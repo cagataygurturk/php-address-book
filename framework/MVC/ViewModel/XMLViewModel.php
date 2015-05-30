@@ -24,10 +24,13 @@ namespace Framework\MVC\ViewModel;
  *
  * @author cagatay
  */
-class HTMLViewModel extends ViewModel implements ViewModelInterface {
+class XMLViewModel extends ViewModel implements ViewModelInterface {
 
     public function render() {
-        return 'html';
+
+        $xml = new \SimpleXMLElement('<root/>');
+        array_walk_recursive($this->data, array($xml, 'addChild'));
+        return $xml->asXML();
     }
 
 }
