@@ -40,6 +40,22 @@ class ServiceManager implements ServiceManagerInterface {
         return $configuration['service_manager'];
     }
 
+    protected function getFromInvokable($class) {
+        return new $class();
+    }
+
+    protected function getFromFactory($class) {
+        $factory = new $class();
+        if (!($factory instanceof FactoryInterface)) {
+            throw new \Framework\Exception\ServiceException($class . ' not implements FactoryInterface');
+        }
+        $object = $factory->getService($this);
+        if ($object instanceof $class) {
+            throw new \Framework\Exception\ServiceException('Object returned by Factory class is not an instance of ' . $class);
+        }
+        return $object;
+    }
+
     public function get($serviceName) {
 
         if ('Configuration' == $serviceName) {
@@ -51,25 +67,35 @@ class ServiceManager implements ServiceManagerInterface {
         }
 
         $config = $this->getConfig();
+        $invokable_class = null;
+        $factory_class = null;
 
-        if (isset($config['aliases'][$serviceName])) {
-            //alias found
-            $class = $config['aliases'][$serviceName];
-            $object = new $class();
+        $object = null;
+
+
+        if (($k = array_search($serviceName, $config['invokables']))) {
+            $invokable_class = $config['invokables'][$k];
         }
 
         if (isset($config['factories'][$serviceName])) {
+            $factory_class = $config['factories'][$serviceName];
+        }
 
-            //factory found
-            $class = $config['factories'][$serviceName];
-            $factory = new $class();
-            if (!($factory instanceof FactoryInterface)) {
-                throw new \Framework\Exception\ServiceException($class . ' not implements FactoryInterface');
+        if (!isset($config['invokables'][$serviceName]) && isset($config['aliases'][$serviceName])) {
+            if (($k = array_search($config['aliases'][$serviceName], $config['invokables']))) {
+                $invokable_class = $config['invokables'][$k];
             }
-            $object = $factory->getService($this);
-            if ($object instanceof $class) {
-                throw new \Framework\Exception\ServiceException('Object returned by Factory class is not an instance of ' . $class);
-            }
+        }
+
+        if (!isset($config['factories'][$serviceName]) && isset($config['aliases'][$serviceName]) && isset($config['factories'][$config['aliases'][$serviceName]])) {
+            $factory_class = $config['factories'][$config['aliases'][$serviceName]];
+        }
+
+
+        if ($invokable_class) {
+            $object = $this->getFromInvokable($invokable_class);
+        } else if ($factory_class) {
+            $object = $this->getFromFactory($factory_class);
         }
 
         if ($object) {

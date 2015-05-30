@@ -25,10 +25,10 @@ class Bootstrap {
         $testServiceConfig = array_merge_recursive($config, array(
             'service_manager' => array(
                 'factories' => array(
-                    'MockServiceByFactory' => 'FrameworkTest\Helpers\MockServiceFactory'
+                    'FrameworkTest\Helpers\MockService' => 'FrameworkTest\Helpers\MockServiceFactory'
                 ),
-                'aliases' => array(
-                    'MockService' => 'FrameworkTest\Helpers\MockService'
+                'invokables' => array(
+                    'FrameworkTest\Helpers\MockService2'
                 )
             ),
             'controllers' => array(

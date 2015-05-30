@@ -27,9 +27,14 @@ return array(
         'aliases' => array(
             'Configuration' => 'Framework\Services\ConfigService',
             'Router' => 'Framework\MVC\Router\Router',
+            'ControllerManager' => 'Framework\MVC\Controller\ControllerManager',
+        ),
+        'invokables' => array(
+            'Framework\Services\ConfigService',
+            'Framework\MVC\Router\Router'
         ),
         'factories' => array(
-            'ControllerManager' => 'Framework\MVC\Controller\ControllerManagerFactory'
+            'Framework\MVC\Controller\ControllerManager' => 'Framework\MVC\Controller\ControllerManagerFactory'
         )
     ),
     'routes' => array(

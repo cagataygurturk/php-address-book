@@ -14,6 +14,11 @@ class PeopleControllerTest extends AbstractHttpTestCase {
         parent::setUp();
     }
 
+    public function testGet() {
+        //$controller = new \Application\Controller\PeopleController($this->getMock('\Application\Services\PersonService'));
+        //$this->assertInternalType('array', $controller->get(1));
+    }
+
     public function testRunApplication() {
         $this->dispatch('/people/12');
         $this->assertResponseStatusCode(200);

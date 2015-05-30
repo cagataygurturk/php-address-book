@@ -14,20 +14,20 @@ class PersonTest extends PHPUnit_Framework_TestCase {
         $serviceManager = \Bootstrap::getServiceManager();
         $this->assertInstanceOf('Framework\ServiceManager\ServiceManagerInterface', $serviceManager);
 
-        $mockServiceClass = 'FrameworkTest\Helpers\MockService';
+        $mockServiceClass = 'FrameworkTest\Helpers\MockService2';
 
 
-        $mockService = $serviceManager->get('MockService');
+        $mockService = $serviceManager->get('FrameworkTest\Helpers\MockService2');
         $this->assertInstanceOf($mockServiceClass, $mockService);
 
-        $mockServiceByFactory = $serviceManager->get('MockService');
+        $mockServiceByFactory = $serviceManager->get('FrameworkTest\Helpers\MockService2');
         $this->assertInstanceOf($mockServiceClass, $mockServiceByFactory);
 
         //test if only one instance is created per name
 
         $testVariable = 'test';
         $mockService->testVariable = $testVariable;
-        $newMockService = $serviceManager->get('MockService');
+        $newMockService = $serviceManager->get('FrameworkTest\Helpers\MockService2');
         $this->assertEquals($testVariable, $newMockService->testVariable);
     }
 

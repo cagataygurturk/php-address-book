@@ -45,6 +45,8 @@ class Application implements ApplicationInterface {
     public static function init(array $config = array()) {
         $application = new Application();
         $application->setConfig($config);
+        $application->serviceManager = new ServiceManager($application->configurationService);
+
         return $application;
     }
 
@@ -72,9 +74,6 @@ class Application implements ApplicationInterface {
      * @return \Framework\ServiceManager\ServiceManagerInterface
      */
     public function getServiceManager() {
-        if (!$this->serviceManager) {
-            $this->serviceManager = new ServiceManager($this->configurationService);
-        }
         return $this->serviceManager;
     }
 
@@ -85,7 +84,7 @@ class Application implements ApplicationInterface {
      */
     public function getResponse() {
         /*
-         * If not set initiate a new Response object
+         * If not set, initiate a new Response object
          */
         if (!$this->response) {
             $this->response = new Response();
@@ -201,7 +200,7 @@ class Application implements ApplicationInterface {
         if (!$this->getRequest()->isHttpRequest()) {
             return false;
         }
-        
+
         http_response_code($this->getResponse()->getStatusCode());
         echo $this->getResponse()->getContent();
         return true;
