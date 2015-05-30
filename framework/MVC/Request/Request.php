@@ -39,6 +39,14 @@ class Request implements RequestInterface {
     const METHOD_CONNECT = 'CONNECT';
     const METHOD_PATCH = 'PATCH';
     const METHOD_PROPFIND = 'PROPFIND';
+    const ACCEPT_JSON = 'json';
+    const ACCEPT_HTML = 'html';
+    const ACCEPT_XML = 'xml';
+
+    /**
+     * @var string
+     */
+    protected $acceptType;
 
     /**
      * @var string
@@ -83,6 +91,12 @@ class Request implements RequestInterface {
         if ($method) {
             $request->setMethod($method);
         }
+
+        $acceptType = (isset($config['accept-type']) ? $config['accept-type'] : (isset($_SERVER['HTTP_ACCEPT']) ? $_SERVER['HTTP_ACCEPT'] : null));
+        if ($acceptType) {
+            $request->setAcceptType($acceptType);
+        }
+
         return $request;
     }
 
@@ -187,6 +201,28 @@ class Request implements RequestInterface {
 
     public function setMethod($method) {
         $this->method = $method;
+    }
+
+    /**
+     * Get request Accept-Type header
+     *
+     * @return string
+     */
+    public function getAcceptType() {
+        return $this->acceptType;
+    }
+
+    public function setAcceptType($acceptType) {
+        $this->acceptType = $acceptType;
+    }
+
+    public function getAcceptedFormat() {
+        
+        if ($this->getAcceptType() == 'application/xml') {
+            return self::ACCEPT_XML;
+        }
+
+        return self::ACCEPT_JSON; //Default
     }
 
     /**
