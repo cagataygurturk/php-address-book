@@ -17,15 +17,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Application\Exception;
+namespace Application\Factories;
 
 /**
- * Description of IOException
+ * Description of PersonServiceFactory
  *
  * @author cagatay
  */
-class IOException extends \Framework\Exception\Exception {
+use Framework\ServiceManager\ServiceManagerInterface;
+use Framework\ServiceManager\FactoryInterface;
+use Application\Services\PersonServiceInterface;
+use Application\Controller\PeopleController;
 
-    protected $code = 500;
+class PeopleControllerFactory implements FactoryInterface {
+
+    /**
+     * Get an instance of PersonService
+     *
+     * @return PersonServiceInterface
+     */
+    public function getService(ServiceManagerInterface $sm) {
+        $personService = $sm->get('PersonService');
+        $personController = new PeopleController($personService);
+        return $personController;
+    }
 
 }

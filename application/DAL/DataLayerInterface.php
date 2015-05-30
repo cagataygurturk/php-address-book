@@ -17,15 +17,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Application\Exception;
+namespace Application\DAL;
 
 /**
- * Description of IOException
+ * Description of DataReaderInterface
  *
  * @author cagatay
  */
-class IOException extends \Framework\Exception\Exception {
+use Application\Model\Entity;
 
-    protected $code = 500;
+interface DataLayerInterface {
 
+    public function __construct(array $config);
+
+    public function setConfig(array $config);
+
+    public function getAllRows();
+
+    public function findByCriteria(array $criterias, $limit = null);
+
+    public function insert(Entity $object);
+
+    public function delete(array $criterias);
 }

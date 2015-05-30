@@ -17,15 +17,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Application\Exception;
+namespace Application\Controller;
 
 /**
- * Description of IOException
+ * Description of PeopleController
  *
  * @author cagatay
  */
-class IOException extends \Framework\Exception\Exception {
+use Framework\MVC\Controller\RESTfulController;
+use Framework\MVC\ViewModel\JSONViewModel;
+use Application\Services\PersonService;
 
-    protected $code = 500;
+class PeopleController extends RESTfulController {
+
+    protected $personService;
+
+    public function __construct(PersonService $personService) {
+        $this->personService = $personService;
+    }
+
+    public function get($id) {
+        try {
+
+            $people = $this->personService->getAllPeople();
+
+            return new JSONViewModel(
+                    array('people' => $people)
+            );
+        } catch (\Exception $ex) {
+            $this->error($ex);
+        }
+    }
 
 }

@@ -17,15 +17,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Application\Exception;
+namespace Application\Services;
 
 /**
- * Description of IOException
+ * IPersonServicee
  *
  * @author cagatay
  */
-class IOException extends \Framework\Exception\Exception {
+interface PersonServiceInterface {
 
-    protected $code = 500;
+    /**
+     * Get person by given Id
+     * Used for related titles
+     *
+     * @return \Application\Model\Person
+     */
+    public function searchPersonById($id);
 
+    /**
+     * Get all people
+     * 
+     *
+     * @return array
+     */
+    public function getAllPeople();
 }

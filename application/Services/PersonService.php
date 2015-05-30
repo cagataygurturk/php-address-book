@@ -17,15 +17,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Application\Exception;
+namespace Application\Services;
 
 /**
- * Description of IOException
+ * Description of PersonService
  *
  * @author cagatay
  */
-class IOException extends \Framework\Exception\Exception {
+use Application\DAL\DataLayerInterface;
 
-    protected $code = 500;
+class PersonService implements PersonServiceInterface {
+
+    protected $database;
+
+    public function __construct(DataLayerInterface $database) {
+        $this->database = $database;
+    }
+
+    public function searchPersonById($id) {
+        return null;
+    }
+
+    public function getAllPeople() {
+        return $this->database->getAllRows();
+    }
 
 }

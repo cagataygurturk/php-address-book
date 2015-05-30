@@ -24,6 +24,6 @@ namespace Application\Exception;
  *
  * @author cagatay
  */
-class InvalidInputException extends \Framework\Exception {
+class InvalidInputException extends \Framework\Exception\Exception {
     
 }

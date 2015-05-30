@@ -17,15 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Application\Exception;
+namespace Application\Model;
 
 /**
- * Description of IOException
+ * Entity is an abstract class that represents a row in the data source
  *
  * @author cagatay
  */
-class IOException extends \Framework\Exception\Exception {
-
-    protected $code = 500;
-
+abstract class Entity {
+    
 }
