@@ -21,9 +21,8 @@ return array(
         )
     ),
     'routes' => array(
-        array('GET', '/people', 'PeopleController', 'getList'),
-        array('GET', '/people/[i:id]', 'PeopleController', 'get'),
-        array('DELETE', '/people/[i:id]', 'PeopleController', 'delete')
+        array('/people', 'PeopleController', 'rest'),
+        array('/people/[i:id]', 'PeopleController', 'rest'),
     ),
     'controllers' => array(
         'aliases' => array(

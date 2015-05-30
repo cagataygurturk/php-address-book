@@ -16,9 +16,9 @@ class RouterTest extends PHPUnit_Framework_TestCase {
         $this->assertInstanceOf('\Framework\MVC\Router\RouterInterface', $router);
 
         $router->addRoutes(array(
-            array('GET', '/people', 'people', 'getList'),
-            array('GET', '/people/[i:id]', 'people', 'get'),
-            array('DELETE', '/people/[i:id]', 'people', 'delete')
+            array('/people', 'people', null),
+            array('/people/[i:id]', 'people', null),
+            array('/people/[i:id]', 'people', null)
         ));
 
 
@@ -27,12 +27,12 @@ class RouterTest extends PHPUnit_Framework_TestCase {
         ))));
 
         $this->assertFalse($router->match(\Framework\MVC\Request\Request::factory(array(
-                            'uri' => '/people/12',
+                            'uri' => '/peoples/12',
                             'method' => 'POST'
         ))));
 
         $this->assertFalse($router->match(\Framework\MVC\Request\Request::factory(array(
-                            'uri' => '/people',
+                            'uri' => '/peoples',
                             'method' => 'POST'
         ))));
     }
