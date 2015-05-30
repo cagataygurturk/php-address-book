@@ -8,10 +8,11 @@
         }
     ],
     "autoload": {
-        "psr-0": {
-            "Framework": "./",
-            "Application": "./",
-            "FrameworkTest": "./test"
+        "psr-4": {
+            "Framework\\": "./framework",
+            "Application\\": "./application",
+            "ApplicationTest\\": "./test/ApplicationTest",
+            "FrameworkTest\\": "./test/FrameworkTest"
         }
     },
     "require-dev": {
