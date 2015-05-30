@@ -35,8 +35,8 @@ class Bootstrap {
                 'factories' => array(
                     'MockControllerByFactory' => 'FrameworkTest\Helpers\MockControllerFactory'
                 ),
-                'aliases' => array(
-                    'MockController' => 'FrameworkTest\Helpers\MockController'
+                'invokables' => array(
+                    'FrameworkTest\Helpers\MockController' => 'FrameworkTest\Helpers\MockController'
                 )
             )
         ));

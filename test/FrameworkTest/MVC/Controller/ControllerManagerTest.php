@@ -15,7 +15,7 @@ class ControllerManagerTest extends PHPUnit_Framework_TestCase {
         $controllerManager = $serviceManager->get('ControllerManager');
 
 
-        $mockController = $controllerManager->get('MockController');
+        $mockController = $controllerManager->get('FrameworkTest\Helpers\MockController');
         $this->assertInstanceOf('\Framework\MVC\Controller\ControllerInterface', $mockController);
         $mockControllerByFactory = $controllerManager->get('MockControllerByFactory');
         $this->assertInstanceOf('\Framework\MVC\Controller\ControllerInterface', $mockControllerByFactory);
