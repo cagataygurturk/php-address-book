@@ -24,6 +24,6 @@ namespace Framework\Exception;
  *
  * @author cagatay
  */
-class ServiceException extends \Exception {
+class ServiceException extends Exception {
     
 }

@@ -20,10 +20,13 @@
 namespace Framework\Exception;
 
 /**
- * Description of ServiceException
+ * Exception are used to give right HTTP Status Codes at the right time
+ * We normally create child class for exceptions and by default all of them will throw 500 HTTP status code.
  *
  * @author cagatay
  */
-class ControllerException extends Exception {
-    
+class Exception extends \Exception {
+
+    protected $code = 500;
+
 }

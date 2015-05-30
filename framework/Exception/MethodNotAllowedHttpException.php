@@ -20,10 +20,13 @@
 namespace Framework\Exception;
 
 /**
- * Description of ServiceException
+ * Description of MethodNotAllowedHttpException
  *
  * @author cagatay
  */
-class ControllerException extends Exception {
-    
+class MethodNotAllowedHttpException extends Exception {
+
+    protected $code = 405;
+    protected $message = 'This method is not allowed';
+
 }
