@@ -6,4 +6,5 @@ php:
   - hhvm
   - nightly
 before_script:
+  - composer self-update
   - composer install
