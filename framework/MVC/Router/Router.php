@@ -24,7 +24,7 @@ namespace Framework\MVC\Router;
  *
  * @author cagatay
  * 
- * Inspired by AltoRouter (https://github.com/dannyvankooten/AltoRouter), rewritten by Cagatay Gurturk
+ * Inspired by AltoRouter (https://github.com/dannyvankooten/AltoRouter), refactored by Cagatay Gurturk
  */
 class Router implements RouterInterface {
 

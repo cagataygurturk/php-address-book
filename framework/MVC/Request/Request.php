@@ -101,6 +101,15 @@ class Request implements RequestInterface {
     }
 
     /**
+     * Is this an HTTP request? (Or console session
+     *
+     * @return bool
+     */
+    public function isHttpRequest() {
+        return isset($_SERVER['HTTP_ACCEPT']);
+    }
+
+    /**
      * Is this an OPTIONS method request?
      *
      * @return bool
@@ -217,7 +226,7 @@ class Request implements RequestInterface {
     }
 
     public function getAcceptedFormat() {
-        
+
         if ($this->getAcceptType() == 'application/xml') {
             return self::ACCEPT_XML;
         }

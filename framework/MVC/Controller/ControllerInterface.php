@@ -25,8 +25,22 @@ namespace Framework\MVC\Controller;
  * @author cagatay
  */
 use Framework\MVC\Router\Params;
+use Framework\MVC\Request\Request;
+use Framework\MVC\Response\Response;
 
 interface ControllerInterface {
 
     public function setParams(Params $params);
+
+    /*
+     * Main application injects Request and Response to controller
+     */
+
+    public function setRequest(Request $request);
+
+    public function getRequest();
+
+    public function setResponse(Response $response);
+
+    public function getResponse();
 }

@@ -25,10 +25,14 @@ namespace Framework\MVC\Controller;
  * @author cagatay
  */
 use Framework\MVC\Router\Params;
+use Framework\MVC\Request\Request;
+use Framework\MVC\Response\Response;
 
-class Controller implements ControllerInterface {
+abstract class Controller implements ControllerInterface {
 
     private $params;
+    private $request;
+    private $response;
 
     public function setParams(Params $params) {
         $this->params = $params;
@@ -36,6 +40,22 @@ class Controller implements ControllerInterface {
 
     protected function params($id) {
         return $this->params->get($id);
+    }
+
+    public function setRequest(Request $request) {
+        $this->request = $request;
+    }
+
+    public function getRequest() {
+        return $this->request;
+    }
+
+    public function setResponse(Response $response) {
+        $this->response = $response;
+    }
+
+    public function getResponse() {
+        return $this->response;
     }
 
 }

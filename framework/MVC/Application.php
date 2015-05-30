@@ -84,6 +84,12 @@ class Application implements ApplicationInterface {
      * @return \Framework\MVC\Response\Response
      */
     public function getResponse() {
+        /*
+         * If not set initiate a new Response object
+         */
+        if (!$this->response) {
+            $this->response = new Response();
+        }
         return $this->response;
     }
 
@@ -121,20 +127,37 @@ class Application implements ApplicationInterface {
         $router->addRoutes($config['routes']);
 
         if (($match = $router->match($this->getRequest())) !== false) {
-            $controllerName = $match->getController();
-            $actionName = $match->getAction();
-            $params = $match->getParams();
+            try {
+                $controllerName = $match->getController();
+                $actionName = $match->getAction();
+                $params = $match->getParams();
 
-            $controller = $this->getControllerManager()->get($controllerName);
-            $controller->setParams($params);
-            $callableActionName = $actionName . 'Action';
-            if (is_callable(array($controller, $callableActionName))) {
-                $viewModel = call_user_func(array($controller, $callableActionName));
-                $this->setResponse(new Response());
-                $this->getResponse()->setContent('test');
-                $this->getResponse()->setStatusCode(200);
-            } else {
-                throw new \Framework\Exception\ControllerException('Action ' . $actionName . ' could not be executed on the controller');
+                $controller = $this->getControllerManager()->get($controllerName);
+                $controller->setParams($params);
+                $callableActionName = $actionName . 'Action';
+                if (is_callable(array($controller, $callableActionName))) {
+
+                    $controller->setRequest($this->getRequest());
+                    $controller->setResponse($this->getResponse());
+
+                    $viewModel = call_user_func(array($controller, $callableActionName));
+                    $this->setResponse(new Response());
+                    if (!$viewModel instanceof ViewModel\ViewModelInterface && !is_array($viewModel)) {
+                        throw new \Framework\Exception\ControllerException('Controller should return ViewModelInterface or array.');
+                    }
+                    if (!$viewModel instanceof ViewModel\ViewModelInterface && is_array($viewModel)) {
+                        $viewModel = $this->viewModelFactory($viewModel);
+                    }
+                    $this->getResponse()->setContent($viewModel->render());
+                    if (!$this->getResponse()->getStatusCode()) {
+                        $this->getResponse()->setStatusCode(200); //default
+                    }
+                    $this->printResponse();
+                } else {
+                    throw new \Framework\Exception\ControllerException('Action ' . $actionName . ' could not be executed on the controller');
+                }
+            } catch (\Exception $e) {
+                $this->catchError($e);
             }
         } else {
             $this->setResponse(new Response());
@@ -143,6 +166,45 @@ class Application implements ApplicationInterface {
         }
 
         return $this;
+    }
+
+    protected function catchError(\Exception $e) {
+        $viewModel = $this->viewModelFactory(array(
+            'code' => $e->getCode(),
+            'message' => $e->getMessage()
+        ));
+
+        $this->setResponse($this->getResponseByViewModel($viewModel));
+        $this->getResponse()->setStatusCode($e->getCode());
+    }
+
+    protected function viewModelFactory(array $data) {
+        switch ($this->getRequest()->getAcceptedFormat()) {
+            case Request::ACCEPT_XML:
+                $vm = new ViewModel\XMLViewModel();
+                break;
+            case Request::ACCEPT_JSON:
+                $vm = new ViewModel\JSONViewModel();
+                break;
+        }
+        $vm->setData($data);
+        return $vm;
+    }
+
+    protected function getResponseByViewModel(ViewModel\ViewModelInterface $viewModel) {
+        $response = new Response();
+        $response->setContent($viewModel->render());
+        return $response;
+    }
+
+    protected function printResponse() {
+        if (!$this->getRequest()->isHttpRequest()) {
+            return false;
+        }
+        
+        http_response_code($this->getResponse()->getStatusCode());
+        echo $this->getResponse()->getContent();
+        return true;
     }
 
 }
