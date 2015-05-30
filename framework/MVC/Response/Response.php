@@ -45,4 +45,8 @@ class Response implements ResponseInterface {
         return $this->content;
     }
 
+    public function __toString() {
+        return $this->content;
+    }
+
 }
