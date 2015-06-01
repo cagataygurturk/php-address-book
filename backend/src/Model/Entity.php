@@ -40,7 +40,7 @@ abstract class Entity {
     }
 
     public function getId() {
-        return $this->id;
+        return (is_numeric($this->id) ? intval($this->id) : $this->id);
     }
 
     public function setId($id) {
