@@ -5,7 +5,7 @@ namespace ApplicationTest\MVC\Controller;
 class PeopleControllerTest extends \FrameworkTest\Helpers\AbstractHttpTestCase {
 
     protected function getAppConfig() {
-        return require __DIR__ . '/../../../../src/MVC/config.php';
+        return require __DIR__ . '/../../../../config/config.php';
     }
 
     public function setUp() {

@@ -15,4 +15,11 @@ class RouterTest extends PHPUnit_Framework_TestCase {
         $this->assertJson($jsonViewModel->render());
     }
 
+    public function testXMLViewModel() {
+        $xmlViewModel = new \Framework\MVC\ViewModel\XMLViewModel(array('test' => array('test2')));
+        $render = $xmlViewModel->render();
+        $this->assertContains('<results>', $render);
+        $this->assertContains('</results>', $render);
+    }
+
 }

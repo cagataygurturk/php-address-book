@@ -11,7 +11,7 @@ return array(
     'data_reader' => array(
         'adapter' => 'Application\Repository\CSVDataLayer',
         'adapter_config' => array(
-            'file' => __DIR__ . '/../../../data/example.csv',
+            'file' => __DIR__ . '/../../data/example.csv',
             'hydrate_to_object' => 'Application\Model\Person',
             'fields' => array(
                 'name',

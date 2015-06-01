@@ -168,7 +168,7 @@ class Application implements ApplicationInterface {
     }
 
     protected function catchError(\Exception $e) {
-        throw $e;
+       
         $viewModel = $this->viewModelFactory(array(
             'code' => $e->getCode(),
             'message' => $e->getMessage()

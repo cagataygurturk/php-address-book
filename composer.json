@@ -11,8 +11,11 @@
         "psr-4": {
             "Framework\\": "./framework/src",
             "Application\\": "./application/src",
+            "Backend\\": "./backend/src",
             "ApplicationTest\\": "./application/tests/ApplicationTest",
-            "FrameworkTest\\": "./framework/tests/FrameworkTest"
+            "FrameworkTest\\": "./framework/tests/FrameworkTest",
+            "BackendTest\\": "./framework/backend/BackendTest"
+
         }
     },
     "require-dev": {

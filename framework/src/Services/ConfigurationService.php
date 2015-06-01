@@ -30,7 +30,7 @@ class ConfigurationService implements ConfigurationServiceInterface {
     private $defaultConfiguration;
 
     public function __construct() {
-        $this->defaultConfiguration = require __DIR__ . '/../config.php'; //Internal configuration
+        $this->defaultConfiguration = require __DIR__ . '/../config/config.php'; //Internal configuration
         $this->config = $this->defaultConfiguration;
     }
 

@@ -26,11 +26,31 @@ namespace Framework\MVC\ViewModel;
  */
 class XMLViewModel extends ViewModel implements ViewModelInterface {
 
+    private function array2XML($data, $rootNodeName = 'results', $xml = NULL) {
+        if ($xml == null) {
+            $xml = simplexml_load_string("<?xml version='1.0' encoding='utf-8'?><$rootNodeName />");
+        }
+
+        foreach ($data as $key => $value) {
+            if (is_numeric($key)) {
+                $key = "nodeId_" . (string) $key;
+            }
+
+            if (is_array($value)) {
+                $node = $xml->addChild($key);
+                $this->array2XML($value, $rootNodeName, $node);
+            } else {
+                $value = htmlentities($value);
+                $xml->addChild($key, $value);
+            }
+        }
+
+        return html_entity_decode($xml->asXML());
+    }
+
     public function render() {
 
-        $xml = new \SimpleXMLElement('<root/>');
-        array_walk_recursive($this->data, array($xml, 'addChild'));
-        return $xml->asXML();
+        return $this->array2XML($this->data);
     }
 
 }
