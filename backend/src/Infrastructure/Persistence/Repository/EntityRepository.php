@@ -135,7 +135,7 @@ abstract class EntityRepository implements EntityRepositoryInterface {
      * THIS IMPLEMENTS ONE OF WORST SEARCH ALGORITHMS BUT IT SEEMS THERE IS NO BETTER WAY
      * AS WE TRY TO GET ALL MATCHING RESULTS. WE MAY HAVE MORE THAN ONE MATCHING RESULTS SO 
      * IN ANY CASE WE MUST SCAN THE TABLE
-     * FOR BETTER PERFORMANCE DO NOT USE CSV :)
+     * FOR BETTER PERFORMANCE DO NOT USE CSV AND DO NOT BLAME ME FOR SUCH A BAD ALGORITHM :)
      *
      * @return array
      */
@@ -145,7 +145,6 @@ abstract class EntityRepository implements EntityRepositoryInterface {
         foreach ($criterias as $field => $value) {
             $methodsToCall[$field] = 'get' . ucfirst($field);
         }
-
         $allrows = $this->getAllRows();
         $results = array();
         foreach ($allrows as $object) {
@@ -156,7 +155,7 @@ abstract class EntityRepository implements EntityRepositoryInterface {
             $matches = true;
             foreach ($criterias as $field => $value) {
                 if (method_exists($object, $methodsToCall[$field])) {
-                    if ($value !== call_user_func(array($object, $methodsToCall[$field]))) {
+                    if ($value != call_user_func(array($object, $methodsToCall[$field]))) {
                         $matches = false;
                     }
                 }
@@ -189,7 +188,7 @@ abstract class EntityRepository implements EntityRepositoryInterface {
             while (($line = fgetcsv($handle)) !== FALSE) {
                 $matches = true;
                 foreach ($this->config['fields'] as $k => $field) {
-                    if (isset($criterias[$field]) && $criterias[$field] !== $line[$k] && $matches) {
+                    if (isset($criterias[$field]) && isset($line[$k]) && $criterias[$field] !== $line[$k] && $matches) {
                         //does not match
                         $matches = false;
                     }

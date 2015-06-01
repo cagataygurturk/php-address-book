@@ -54,6 +54,16 @@ class PersonRepositoryTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($nameToSearch, $firstObject->getName());
     }
 
+    public function testGetFindRowOneById() {
+        $idToSearch = '1';
+        $database = new PersonRepository($this->config);
+        $allrows = $database->findByCriteria(array('id' => $idToSearch), 1);
+        $this->assertEquals(1, count($allrows));
+        $firstObject = $allrows[0];
+        $this->assertInstanceOf('\Backend\Model\Person', $firstObject);
+        $this->assertEquals($idToSearch, $firstObject->getId());
+    }
+
     public function testAddObject() {
         $database = new PersonRepository($this->config);
 

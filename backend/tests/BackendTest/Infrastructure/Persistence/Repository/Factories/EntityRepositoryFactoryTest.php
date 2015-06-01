@@ -23,6 +23,7 @@ class EntityRepositoryFactoryTest extends PHPUnit_Framework_TestCase {
                 'file' => __DIR__ . '/../../../../../data/example.csv',
                 'hydrate_to_object' => '\Backend\Model\Person',
                 'fields' => array(
+                    'id',
                     'name',
                     'phone',
                     'address'
