@@ -1,9 +1,9 @@
 <?php
 
-namespace ApplicationTest\Model;
+namespace BackendTest\Model;
 
 use PHPUnit_Framework_TestCase;
-use Application\Model\Person;
+use Backend\Model\Person;
 
 class PersonTest extends PHPUnit_Framework_TestCase {
 
@@ -18,7 +18,7 @@ class PersonTest extends PHPUnit_Framework_TestCase {
     public function testPersonCreateTest() {
 
         $person = new Person();
-        $this->assertInstanceOf('\Application\Model\Person', $person);
+        $this->assertInstanceOf('\Backend\Model\Person', $person);
 
         /* Test data */
         $name = 'Cagatay Gurturk';
