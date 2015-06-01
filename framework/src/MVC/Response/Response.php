@@ -91,7 +91,6 @@ class Response implements ResponseInterface {
         if (!isset($this->status_codes[$code])) {
             $code = 500;
         }
-
         $this->statusCode = $code;
     }
 

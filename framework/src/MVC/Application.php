@@ -140,7 +140,6 @@ class Application implements ApplicationInterface {
                     $controller->setResponse($this->getResponse());
 
                     $viewModel = call_user_func(array($controller, $callableActionName));
-                    $this->setResponse(new Response());
                     if (!$viewModel instanceof ViewModel\ViewModelInterface && !is_array($viewModel)) {
                         throw new \Framework\Exception\ControllerException('Controller should return ViewModelInterface or array.');
                     }
@@ -201,7 +200,7 @@ class Application implements ApplicationInterface {
         if (!$this->getRequest()->isHttpRequest()) {
             return false;
         }
-
+        
         http_response_code($this->getResponse()->getStatusCode());
         echo $this->getResponse()->getContent();
         return true;
