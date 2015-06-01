@@ -20,6 +20,8 @@
 namespace Application\Services\Factories;
 
 /**
+ * Framework-specific factory for PersonService
+ * 
  * Why we use this factory class if we already have a Factory in MVC layer that is used for Service Manager?
  * Because this factory is framework-agnostic. Even we are not using any framework, just with a RepositoryInterface
  * we can create a PersonService instance easily
@@ -29,24 +31,19 @@ namespace Application\Services\Factories;
  *
  * @author cagatay
  */
-use Application\Services\PersonService;
-use Application\Repository\RepositoryInterface;
+use Framework\ServiceManager\ServiceManagerInterface;
+use Framework\ServiceManager\FactoryInterface;
+use Backend\API\PersonService\PersonServiceInterface;
 
-class PersonServiceFactory implements FactoryInterface {
+class PersonServiceFactory extends \Backend\API\Factories\PersonServiceFactory implements FactoryInterface {
 
-    protected $repositoryService;
-
-    public function setRepositoryService(RepositoryInterface $repositoryService) {
-        $this->repositoryService = $repositoryService;
-    }
-
-    public function createService() {
-        if (!$this->repositoryService) {
-            throw new \Application\Exception\InvalidInputException('Repository service needed');
-        }
-        $service = new PersonService();
-        $service->setRepositoryService($this->repositoryService);
-        return $service;
+    /**
+     * Get an instance of PersonService
+     *
+     * @return PersonServiceInterface
+     */
+    public function getService(ServiceManagerInterface $sm) {
+        return parent::createService();
     }
 
 }

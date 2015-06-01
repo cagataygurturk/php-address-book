@@ -13,7 +13,7 @@ class PersonServiceFactoryTest extends PHPUnit_Framework_TestCase {
     public function testGetService() {
         $serviceManager = \Bootstrap::getServiceManager();
         $mockService = $serviceManager->get('Application\Services\PersonService');
-        $this->assertInstanceOf('\Application\Services\PersonServiceInterface', $mockService);
+        $this->assertInstanceOf('\Backend\API\PersonService\PersonServiceInterface', $mockService);
     }
 
 }

@@ -5,19 +5,7 @@ return array(
     'service_manager' => array(
         'aliases' => array(),
         'factories' => array(
-            'Application\Services\PersonService' => 'Application\MVC\Factories\PersonServiceFactory'
-        )
-    ),
-    'data_reader' => array(
-        'adapter' => 'Application\Repository\CSVDataLayer',
-        'adapter_config' => array(
-            'file' => __DIR__ . '/../../data/example.csv',
-            'hydrate_to_object' => 'Application\Model\Person',
-            'fields' => array(
-                'name',
-                'phone',
-                'address'
-            )
+            'Application\Services\PersonService' => 'Application\Services\Factories\PersonServiceFactory'
         )
     ),
     'routes' => array(
