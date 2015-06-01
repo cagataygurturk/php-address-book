@@ -55,8 +55,8 @@ class Person extends Entity implements \JsonSerializable {
         return $this->phone;
     }
 
-    public function setAddress($adress) {
-        $this->adress = $adress;
+    public function setAddress($address) {
+        $this->adress = $address;
     }
 
     public function getAddress() {

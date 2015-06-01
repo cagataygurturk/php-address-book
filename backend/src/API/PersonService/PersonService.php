@@ -49,7 +49,7 @@ class PersonService implements PersonServiceInterface {
      *
      * @return Person
      */
-    public function searchPersonById($id) {
+    public function getPersonById($id) {
         //We do not have
         return $this->database->findByCriteria(array('id' => $id));
     }
@@ -62,6 +62,39 @@ class PersonService implements PersonServiceInterface {
      */
     public function getAllPeople() {
         return $this->database->getAllRows();
+    }
+
+    /**
+     * Insert person to the repository
+     * 
+     * @param string $name Name
+     * @param string $phone Telephone 
+     * @param string $address Address
+     *  
+     * @return Person;
+     */
+    public function insert($name, $phone, $address) {
+        $person = new Person();
+        $person->setName($name);
+        $person->setPhone($phone);
+        $person->setAddress($address);
+        $this->database->insert($person);
+        return $person;
+    }
+
+    /**
+     * Delete person by id
+     * 
+     * @param string $id Id
+     *  
+     * @return bool;
+     */
+    public function delete($id) {
+        $objectToDelete = $this->database->findByCriteria(array('id' => $id));
+        if (isset($objectToDelete[0]) && $objectToDelete[0] instanceof \Backend\Model\Entity) {
+            return $this->database->delete(array('id' => $id));
+        }
+        return false;
     }
 
 }

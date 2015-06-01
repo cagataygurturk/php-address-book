@@ -30,12 +30,20 @@ use Backend\Model\Person;
 interface PersonServiceInterface {
 
     /**
+     * Set Repository
+     * 
+     *
+     * @return void;
+     */
+    public function setRepositoryService(PersonRepositoryInterface $database);
+
+    /**
      * Get person by given Id
      * Used for related titles
      *
      * @return Person
      */
-    public function searchPersonById($id);
+    public function getPersonById($id);
 
     /**
      * Get all people
@@ -46,10 +54,22 @@ interface PersonServiceInterface {
     public function getAllPeople();
 
     /**
-     * Set Repository
+     * Insert person to the repository
      * 
-     *
-     * @return void;
+     * @param string $name Name
+     * @param string $phone Telephone 
+     * @param string $address Address
+     *  
+     * @return Person;
      */
-    public function setRepositoryService(PersonRepositoryInterface $database);
+    public function insert($name, $phone, $address);
+
+    /**
+     * Delete person by id
+     * 
+     * @param string $id Id
+     *  
+     * @return bool;
+     */
+    public function delete($id);
 }

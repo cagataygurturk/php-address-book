@@ -23,9 +23,20 @@ class PersonServiceTest extends PHPUnit_Framework_TestCase {
     public function testFindOneRow() {
         $factory = new PersonServiceFactory();
         $service = $factory->createService();
-        $searchResult = $service->searchPersonById(1);
+        $searchResult = $service->getPersonById(1);
 
         $this->assertGreaterThan(0, count($searchResult));
+    }
+
+    public function testInsertNewPersonAndDelete() {
+        $factory = new PersonServiceFactory();
+        $service = $factory->createService();
+
+        $person = $service->insert('John Doe', '0000000000', 'New York');
+        $this->assertInstanceOf('\Backend\Model\Person', $person);
+        $search = $service->getPersonById($person->getId());
+        $this->assertGreaterThan(0, count($search));
+        $this->assertTrue($service->delete($person->getId()));
     }
 
 }
