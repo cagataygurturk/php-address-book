@@ -51,7 +51,7 @@ class PersonService implements PersonServiceInterface {
      */
     public function searchPersonById($id) {
         //We do not have
-        $this->database->findByCriteria(array('name' => $id));
+        return $this->database->findByCriteria(array('id' => $id));
     }
 
     /**

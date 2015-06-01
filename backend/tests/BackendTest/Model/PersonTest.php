@@ -11,17 +11,18 @@ class PersonTest extends PHPUnit_Framework_TestCase {
         parent::setUp();
     }
 
-   
     public function testPersonCreateTest() {
 
         $person = new Person();
         $this->assertInstanceOf('\Backend\Model\Person', $person);
 
         /* Test data */
+        $id = 1;
         $name = 'Cagatay Gurturk';
         $phone = '34603547254';
         $address = 'Comte Borrell, 151, 1-1';
 
+        $person->setId(1);
         $person->setName($name);
         $person->setPhone($phone);
         $person->setAddress($address);

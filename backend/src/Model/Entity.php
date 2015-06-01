@@ -25,5 +25,31 @@ namespace Backend\Model;
  * @author cagatay
  */
 abstract class Entity {
-    
+    /*
+     * When flag is true, when new entity is created an UUID will be automatically created
+     * @var bool
+     */
+
+    protected $generate_id = true;
+    protected $id;
+
+    public function __construct() {
+        if ($this->generate_id) {
+            $this->setId($this->createId());
+        }
+    }
+
+    public function getId() {
+        return $this->id;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    protected function createId() {
+        return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0x0fff) | 0x4000, mt_rand(0, 0x3fff) | 0x8000, mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
+        );
+    }
+
 }

@@ -32,6 +32,7 @@ class Person extends Entity implements \JsonSerializable {
 
     public function jsonSerialize() {
         return array(
+            'id' => $this->getId(),
             'name' => $this->getName(),
             'phone' => $this->getPhone(),
             'address' => $this->getAddress()

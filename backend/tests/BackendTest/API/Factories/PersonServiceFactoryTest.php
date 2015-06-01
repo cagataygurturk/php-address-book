@@ -1,6 +1,6 @@
 <?php
 
-namespace BackendTest\Infrastructure\Persistence\Repository\EntityRepository;
+namespace BackendTest\BackendTest\API\Factories;
 
 use PHPUnit_Framework_TestCase;
 use Backend\API\Factories\PersonServiceFactory;
@@ -16,7 +16,7 @@ class PersonServiceFactoryTest extends PHPUnit_Framework_TestCase {
     public function testCreateService() {
         $factory = new PersonServiceFactory();
         $service = $factory->createService();
-        echo get_class($service);
+
         $this->assertInstanceOf('\Backend\API\PersonService\PersonService', $service);
     }
 
