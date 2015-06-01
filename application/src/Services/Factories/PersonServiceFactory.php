@@ -28,6 +28,8 @@ namespace Application\Services\Factories;
  * 
  * In Application\MVC\Factories\PersonServiceFactory we are extending this factory and implementing framework-specific factory interface
  * to help Service Manager create objects
+ * 
+ * This is the unique connection channel between the MVC application and the Backend part in our application
  *
  * @author cagatay
  */
