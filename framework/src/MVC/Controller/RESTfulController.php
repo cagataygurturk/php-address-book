@@ -19,14 +19,26 @@
 
 namespace Framework\MVC\Controller;
 
+use Framework\MVC\ViewModel\JSONViewModel;
 /**
- * Description of RESTfulController
+ * RESTfulController abstracts REST methods from custom controller
+ * It dispatches actions according to the HTTP verb used in the request.
+ * For example POST request always are routed to create($data) action of extending Controller class
+ * Inspired by ZF2 AbstractRestfulController
  *
  * @author cagatay
  */
 use Framework\MVC\Request\Request;
 
 abstract class RESTfulController extends Controller {
+
+    protected function throwError(\Exception $e) {
+        $this->getResponse()->setStatusCode($e->getCode());
+        return new JSONViewModel(
+                array('code' => $e->getCode(),
+            'error' => $e->getMessage())
+        );
+    }
 
     public function restAction() {
         switch ($this->getRequest()->getMethod()) {
