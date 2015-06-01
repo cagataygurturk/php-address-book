@@ -27,5 +27,6 @@ namespace Application\Exception;
 class NotFoundException extends \Framework\Exception\Exception {
 
     protected $code = 404;
+    protected $message = 'Not found';
 
 }
