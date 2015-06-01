@@ -26,7 +26,8 @@ namespace Application\MVC\Controller;
  */
 use Framework\MVC\Controller\RESTfulController;
 use Framework\MVC\ViewModel\JSONViewModel;
-use Application\Services\PersonServiceInterface;
+use Backend\API\PersonService\PersonServiceInterface;
+use Application\Exception\NotFoundException;
 
 class PeopleController extends RESTfulController {
 
@@ -39,13 +40,33 @@ class PeopleController extends RESTfulController {
     public function get($id) {
         try {
 
-            $people = $this->personService->getAllPeople();
+            $people = $this->personService->searchPersonById($id);
+
+            if (count($people) == 0) {
+                throw new NotFoundException();
+            }
+
 
             return new JSONViewModel(
                     array('people' => $people)
             );
         } catch (\Exception $ex) {
-            $this->error($ex);
+            return $this->throwError($ex);
+        }
+    }
+
+    public function getList() {
+        try {
+
+            $people = $this->personService->getAllPeople();
+            if (count($people) == 0) {
+                throw new NotFoundException();
+            }
+            return new JSONViewModel(
+                    array('people' => $people)
+            );
+        } catch (\Exception $ex) {
+            return $this->throwError($ex);
         }
     }
 

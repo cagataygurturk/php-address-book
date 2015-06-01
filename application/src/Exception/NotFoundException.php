@@ -17,32 +17,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Application\Services;
+namespace Application\Exception;
 
 /**
- * IPersonServicee
+ * Description of IOException
  *
  * @author cagatay
  */
-use Application\Repository\RepositoryInterface;
+class NotFoundException extends \Framework\Exception\Exception {
 
-interface PersonServiceInterface {
+    protected $code = 404;
 
-    /**
-     * Get person by given Id
-     * Used for related titles
-     *
-     * @return \Application\Model\Person
-     */
-    public function searchPersonById($id);
-
-    /**
-     * Get all people
-     * 
-     *
-     * @return array
-     */
-    public function getAllPeople();
-
-    public function setRepositoryService(RepositoryInterface $database);
 }
