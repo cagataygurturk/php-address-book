@@ -11,10 +11,7 @@ class PersonTest extends PHPUnit_Framework_TestCase {
         parent::setUp();
     }
 
-    /**
-     * @group lists
-     * Tests the api edit form
-     */
+   
     public function testPersonCreateTest() {
 
         $person = new Person();
