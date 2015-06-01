@@ -12,9 +12,9 @@ class PeopleControllerTest extends \FrameworkTest\Helpers\AbstractHttpTestCase {
         parent::setUp();
     }
 
-    public function testGet() {
-        //$controller = new \Application\Controller\PeopleController($this->getMock('\Application\Services\PersonService'));
-        //$this->assertInternalType('array', $controller->get(1));
+    public function testNotFound() {
+        $this->dispatch('/');
+        $this->assertResponseStatusCode(404);
     }
 
     public function testGetId() {
@@ -22,11 +22,10 @@ class PeopleControllerTest extends \FrameworkTest\Helpers\AbstractHttpTestCase {
         $this->assertResponseStatusCode(200);
         $this->assertJson($this->getResponse()->getContent());
         $response = json_decode($this->getResponse()->getContent(), true);
-        $this->assertArrayHasKey('people', $response);
-        $this->assertGreaterThan(0, count($response['people']));
+        $this->assertGreaterThan(0, count($response));
     }
 
-    public function testNotFound() {
+    public function testNotFoundResource() {
         $this->dispatch('/people/12');
         $this->assertResponseStatusCode(404);
         $this->assertJson($this->getResponse()->getContent());
@@ -37,8 +36,7 @@ class PeopleControllerTest extends \FrameworkTest\Helpers\AbstractHttpTestCase {
         $this->assertResponseStatusCode(200);
         $this->assertJson($this->getResponse()->getContent());
         $response = json_decode($this->getResponse()->getContent(), true);
-        $this->assertArrayHasKey('people', $response);
-        $this->assertGreaterThan(1, count($response['people']));
+        $this->assertGreaterThan(1, count($response));
     }
 
 }
