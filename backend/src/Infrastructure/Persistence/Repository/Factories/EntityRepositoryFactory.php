@@ -39,9 +39,16 @@ class EntityRepositoryFactory implements EntityRepositoryFactoryInterface {
      * @param array $config Repository configuration
      * @return void
      */
-    public function __construct(array $config) {
-
-        $this->config = $config;
+    public function __construct(array $config = null) {
+        if ($config) {
+            $this->config = $config;
+        } else {
+            $defaultConfig = require __DIR__ . '/../../../../../config/config.php';
+            if (!isset($defaultConfig['repositories'])) {
+                throw new InvalidInputException('Repositories configuration is not correctly set.');
+            }
+            $this->config = $defaultConfig['repositories'];
+        }
     }
 
     /**

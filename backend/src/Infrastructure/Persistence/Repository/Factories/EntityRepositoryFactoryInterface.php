@@ -34,8 +34,9 @@ interface EntityRepositoryFactoryInterface {
      * @param array $config Repository configuration
      * @return void
      */
-    public function __construct(array $config);
+    public function __construct(array $config = null);
 
+    
     /**
      * Create service
      *

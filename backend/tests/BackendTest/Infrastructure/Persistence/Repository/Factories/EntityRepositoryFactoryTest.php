@@ -66,4 +66,10 @@ class EntityRepositoryFactoryTest extends PHPUnit_Framework_TestCase {
         $this->assertInstanceOf('\Backend\Infrastructure\Persistence\Repository\PersonRepository', $repository);
     }
 
+    public function testCreateRepositoryFromConfig() {
+        $factory = new EntityRepositoryFactory();
+        $repository = $factory->createRepository('person');
+        $this->assertInstanceOf('\Backend\Infrastructure\Persistence\Repository\PersonRepository', $repository);
+    }
+
 }
