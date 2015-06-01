@@ -161,13 +161,14 @@ class Application implements ApplicationInterface {
             $this->setResponse(new Response());
             $this->getResponse()->setContent('Not found');
             $this->getResponse()->setStatusCode(404);
+            $this->printResponse();
         }
 
         return $this;
     }
 
     protected function catchError(\Exception $e) {
-       
+
         $viewModel = $this->viewModelFactory(array(
             'code' => $e->getCode(),
             'message' => $e->getMessage()
@@ -200,7 +201,7 @@ class Application implements ApplicationInterface {
         if (!$this->getRequest()->isHttpRequest()) {
             return false;
         }
-        
+
         http_response_code($this->getResponse()->getStatusCode());
         echo $this->getResponse()->getContent();
         return true;
