@@ -26,7 +26,7 @@ namespace Backend\Infrastructure\Persistence\Repository\Factories;
  */
 use Backend\Infrastructure\Persistence\Repository\EntityRepositoryInterface;
 use Backend\Exception\InvalidInputException;
-use \Backend\Exception\ServiceException;
+use Backend\Exception\ServiceException;
 
 class EntityRepositoryFactory implements EntityRepositoryFactoryInterface {
 
