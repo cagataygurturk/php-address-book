@@ -26,6 +26,7 @@ class PersonServiceTest extends PHPUnit_Framework_TestCase {
         $searchResult = $service->getPersonById(1);
 
         $this->assertGreaterThan(0, count($searchResult));
+        $this->assertEquals(1, $searchResult[0]->getId());
     }
 
     public function testInsertNewPersonAndDelete() {
