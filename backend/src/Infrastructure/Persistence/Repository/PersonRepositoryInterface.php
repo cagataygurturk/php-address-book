@@ -20,11 +20,11 @@
 namespace Backend\Infrastructure\Persistence\Repository;
 
 /**
- * PersonRepository can include other methods but right now we are ok with inherited methods
- * We have an empty PersonRepositoryInterface for testing purposes
+ * PersonRepositoryInterface extends EntityRepositoryInterface but does not require any other funcionality.
+ * It is just for abstracting the implementation
  *
  * @author cagatay
  */
-class PersonRepository extends EntityRepository implements PersonRepositoryInterface {
+interface PersonRepositoryInterface extends EntityRepositoryInterface {
     
 }
