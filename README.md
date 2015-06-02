@@ -52,13 +52,21 @@ a DELETE request to the same endpoint will delete the record.
 
 Due to limitations of CSV datastore, the implementation of PUT request is not implemented and it will give 405 (Method Not Allowed) response.
 
+The REST API also respects Accept header. The default response type is JSON always but if you want to get XML response, just send 
+
+    Accept: text/xml, application/xml
+
+header along with your request.
+
+OPTIONS method returns the supported methods.
+
 Structure
 =========
 
 The project consists on 3 layers:
 
  - Framework: A basic MVC framework built from scratch.
- - Backend: The Business layer sits here.
+ - Backend: The Business layer sits here. It does not implement DDD architecture completely but it is heavily inspired by DDD and its main principles.
  - Application: A MVC application built on the newly developed MVC framework and consumes Backend's API.
 
 ## Framework ##
@@ -98,7 +106,7 @@ Controllers should extend **Framework\MVC\Controller\Controller** abstract class
 
 Controllers should return an object implementing **Framework\MVC\ViewModel\ViewModelInterface** object, an array or Response object.
 
-When it returns **ViewModelInterface** render() method of the ViewModel is sent to users. When it returns an array, JSON or XML responses are returned in function of Accept header. If it returns Response, this object is returned to the client without modification.
+When it returns **ViewModelInterface** render() method of the ViewModel is sent to users. When it returns an array, JSON or XML responses are returned in function of Acceptheader. If it returns Response, this object is returned to the client without modification.
 
 ### Router ###
 
@@ -135,7 +143,7 @@ This configuration section maps every line of the .csv file to an object. Each s
 
 The Backend includes a service called **Backend\API\PersonService** that operates on objects and uses the repository to persist them. Due to our limited domain, this service does not include many business rules (actually any) but these can be implemented easily.
 
-Highlights
+Architecture Highlights
 =========
 
 This application is designed to be looesly coupled. Almost all components are independents, their dependencies are defined by interfaces which makes eaiser testing and all the dependencies are injected on runtime.
@@ -145,3 +153,5 @@ The application layer communicates with backend only using PersonService and the
 Data Access Layer is very flexible. Implementing EntityRepositoryInterface, the data storage mechanism can be changed without any modification on upper layers.
 
 HTTP application uses REST verbs and HTTP status codes for communicating with the client. For example, for a request that do not return any results, the client also gets 404 status code. For a deleted object it gives a 204 (No Content) status code. For better control on the status codes, the application uses exceptions. Every derived exception (like **Application\Exception\NotFoundException**) has a HTTP status code (default 500) in its \$code property. So, when an unhandles exception occurs for the MVC framework sends the \$code property of the thrown Exception. Actually it's very nice method to control HTTP status code that I love, also HHVM had a bug about this subject reported by me: https://github.com/facebook/hhvm/issues/4379 There is a workaround about this issue that I have not implemented in this project therefore tests are failing in HHVM environment.
+
+For any questions please send an email to info@cagataygurturk.com
