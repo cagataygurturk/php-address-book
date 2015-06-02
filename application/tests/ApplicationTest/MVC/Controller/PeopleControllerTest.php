@@ -17,6 +17,11 @@ class PeopleControllerTest extends \FrameworkTest\Helpers\AbstractHttpTestCase {
         $this->assertResponseStatusCode(404);
     }
 
+    public function testMethodNotAllowed() {
+        $this->dispatch('/people/1', 'PATCH');
+        $this->assertResponseStatusCode(405);
+    }
+
     public function testGetId() {
         $this->dispatch('/people/1');
         $this->assertResponseStatusCode(200);
@@ -37,6 +42,30 @@ class PeopleControllerTest extends \FrameworkTest\Helpers\AbstractHttpTestCase {
         $this->assertJson($this->getResponse()->getContent());
         $response = json_decode($this->getResponse()->getContent(), true);
         $this->assertGreaterThan(1, count($response));
+    }
+
+    public function testInsertAndDelete() {
+        $this->dispatch('/people', 'POST', array(
+            'name' => 'John Doe',
+            'phone' => '1111111111',
+            'address' => 'New York 11'
+        ));
+        $this->assertResponseStatusCode(201);
+        $this->assertJson($this->getResponse()->getContent());
+        $response = json_decode($this->getResponse()->getContent(), true);
+        $this->assertGreaterThan(0, count($response));
+
+        $id = $response[0]['id'];
+
+        $this->assertNotNull($id);
+
+        $this->dispatch('/people/' . $id, 'DELETE');
+        $this->assertResponseStatusCode(204);
+    }
+
+    public function testInsertAndDeleteNotFound() {
+        $this->dispatch('/people/123131313', 'DELETE');
+        $this->assertResponseStatusCode(404);
     }
 
 }

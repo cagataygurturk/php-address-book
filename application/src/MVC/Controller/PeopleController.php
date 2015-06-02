@@ -40,7 +40,7 @@ class PeopleController extends RESTfulController {
     public function get($id) {
         try {
 
-            $people = $this->personService->searchPersonById($id);
+            $people = $this->personService->getPersonById($id);
 
             if (count($people) == 0) {
                 throw new NotFoundException();
@@ -48,7 +48,7 @@ class PeopleController extends RESTfulController {
 
 
             return new JSONViewModel(
-                    array('people' => $people)
+                    $people
             );
         } catch (\Exception $ex) {
             return $this->throwError($ex);
@@ -63,8 +63,33 @@ class PeopleController extends RESTfulController {
                 throw new NotFoundException();
             }
             return new JSONViewModel(
-                    array('people' => $people)
+                    $people
             );
+        } catch (\Exception $ex) {
+            return $this->throwError($ex);
+        }
+    }
+
+    public function create($data) {
+        try {
+            $person = $this->personService->insert($data['name'], $data['phone'], $data['address']);
+            $this->getResponse()->setStatusCode(201);
+            return new JSONViewModel(
+                    array($person)
+            );
+        } catch (\Exception $ex) {
+            return $this->throwError($ex);
+        }
+    }
+
+    public function delete($id) {
+        try {
+            if ($this->personService->delete($id)) {
+                $this->getResponse()->setStatusCode(204);
+                return $this->getResponse()->setContent('');
+            } else {
+                throw new NotFoundException();
+            }
         } catch (\Exception $ex) {
             return $this->throwError($ex);
         }

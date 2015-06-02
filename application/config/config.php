@@ -10,7 +10,7 @@ return array(
     ),
     'routes' => array(
         array('/people', 'Application\MVC\Controller\PeopleController', 'rest'),
-        array('/people/[i:id]', 'Application\MVC\Controller\PeopleController', 'rest'),
+        array('/people/[:id]', 'Application\MVC\Controller\PeopleController', 'rest'),
     ),
     'controllers' => array(
         'invokables' => array(

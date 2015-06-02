@@ -92,6 +92,7 @@ class Response implements ResponseInterface {
             $code = 500;
         }
         $this->statusCode = $code;
+        return $this;
     }
 
     public function getStatusCode() {
@@ -100,6 +101,7 @@ class Response implements ResponseInterface {
 
     public function setContent($content) {
         $this->content = $content;
+        return $this;
     }
 
     public function getContent() {
