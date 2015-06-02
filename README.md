@@ -98,7 +98,7 @@ Controllers should extend **Framework\MVC\Controller\Controller** abstract class
 
 Controllers should return an object implementing **Framework\MVC\ViewModel\ViewModelInterface** object, an array or Response object.
 
-When it returns **ViewModelInterface** render() method of the ViewModel is sent to users. When it returns an array, JSON or XML responses are returned in function of Accept-type header. If it returns Response, this object is returned to the client without modification.
+When it returns **ViewModelInterface** render() method of the ViewModel is sent to users. When it returns an array, JSON or XML responses are returned in function of Accept header. If it returns Response, this object is returned to the client without modification.
 
 ### Router ###
 

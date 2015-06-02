@@ -32,6 +32,7 @@ use Application\Exception\NotFoundException;
 class PeopleController extends RESTfulController {
 
     protected $personService;
+    protected $allowedMethods = array('GET', 'POST', 'DELETE');
 
     public function __construct(PersonServiceInterface $personService) {
         $this->personService = $personService;
