@@ -140,13 +140,16 @@ class Application implements ApplicationInterface {
                     $controller->setResponse($this->getResponse());
 
                     $viewModel = call_user_func(array($controller, $callableActionName));
-                    if (!$viewModel instanceof ViewModel\ViewModelInterface && !is_array($viewModel)) {
-                        throw new \Framework\Exception\ControllerException('Controller should return ViewModelInterface or array.');
+
+                    if (!$viewModel instanceof Response) {
+                        if (!$viewModel instanceof ViewModel\ViewModelInterface && !is_array($viewModel)) {
+                            throw new \Framework\Exception\ControllerException('Controller should return ViewModelInterface or array.');
+                        }
+                        if (!$viewModel instanceof ViewModel\ViewModelInterface && is_array($viewModel)) {
+                            $viewModel = $this->viewModelFactory($viewModel);
+                        }
+                        $this->getResponse()->setContent($viewModel->render());
                     }
-                    if (!$viewModel instanceof ViewModel\ViewModelInterface && is_array($viewModel)) {
-                        $viewModel = $this->viewModelFactory($viewModel);
-                    }
-                    $this->getResponse()->setContent($viewModel->render());
                     if (!$this->getResponse()->getStatusCode()) {
                         $this->getResponse()->setStatusCode(200); //default
                     }
@@ -168,7 +171,7 @@ class Application implements ApplicationInterface {
     }
 
     protected function catchError(\Exception $e) {
-
+        
         $viewModel = $this->viewModelFactory(array(
             'code' => $e->getCode(),
             'message' => $e->getMessage()
