@@ -32,6 +32,8 @@ use Framework\MVC\Request\Request;
 
 abstract class RESTfulController extends Controller {
 
+    protected $allowedMethods = array('GET', 'POST', 'DELETE', 'PUT');
+
     protected function throwError(\Exception $e) {
         $this->getResponse()->setStatusCode($e->getCode());
         return new JSONViewModel(
@@ -63,7 +65,9 @@ abstract class RESTfulController extends Controller {
     }
 
     public function optionsAction() {
-        
+
+        header('Access-Control-Allow-Methods: ' . implode(',', $this->allowedMethods));
+        return $this->getResponse();
     }
 
     public function getAction() {
