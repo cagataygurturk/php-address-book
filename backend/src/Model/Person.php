@@ -24,11 +24,20 @@ namespace Backend\Model;
  *
  * @author cagatay
  */
-class Person extends Entity implements \JsonSerializable {
+class Person extends Entity implements \JsonSerializable, XMLSerializable {
 
     private $name;
     private $phone;
     private $adress;
+
+    public function xmlSerialize() {
+        return array(
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'phone' => $this->getPhone(),
+            'address' => $this->getAddress()
+        );
+    }
 
     public function jsonSerialize() {
         return array(
