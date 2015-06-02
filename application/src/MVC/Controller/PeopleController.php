@@ -47,9 +47,7 @@ class PeopleController extends RESTfulController {
             }
 
 
-            return new JSONViewModel(
-                    $people
-            );
+            return $people;
         } catch (\Exception $ex) {
             return $this->throwError($ex);
         }
@@ -62,9 +60,7 @@ class PeopleController extends RESTfulController {
             if (count($people) == 0) {
                 throw new NotFoundException();
             }
-            return new JSONViewModel(
-                    $people
-            );
+            return $people;
         } catch (\Exception $ex) {
             return $this->throwError($ex);
         }
