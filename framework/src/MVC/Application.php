@@ -38,7 +38,8 @@ class Application implements ApplicationInterface {
     protected $response;
 
     /**
-     * Init the application
+     * Init the application, inject the configuration array and return the instance
+     * 
      *
      * @return self
      */
@@ -46,7 +47,6 @@ class Application implements ApplicationInterface {
         $application = new Application();
         $application->setConfig($config);
         $application->serviceManager = new ServiceManager($application->configurationService);
-
         return $application;
     }
 
@@ -84,7 +84,7 @@ class Application implements ApplicationInterface {
      */
     public function getResponse() {
         /*
-         * If not set, initiate a new Response object
+         * If not set, initiate a new Response object, never returns null
          */
         if (!$this->response) {
             $this->response = new Response();
@@ -105,6 +105,12 @@ class Application implements ApplicationInterface {
         return $this->request;
     }
 
+    /**
+     * Set Request for the application lifecycle
+     *
+     * @param  Request $request Request
+     * @return void
+     */
     public function setRequest(Request $request) {
         $this->request = $request;
     }
@@ -126,6 +132,9 @@ class Application implements ApplicationInterface {
         $router->addRoutes($config['routes']);
 
         if (($match = $router->match($this->getRequest())) !== false) {
+            /*
+             * Router matches a controller
+             */
             try {
                 $controllerName = $match->getController();
                 $actionName = $match->getAction();
@@ -135,24 +144,44 @@ class Application implements ApplicationInterface {
                 $controller->setParams($params);
                 $callableActionName = $actionName . 'Action';
                 if (is_callable(array($controller, $callableActionName))) {
+                    /*
+                     * Matched action exists in the matched controller class
+                     */
 
+
+                    /* We inject the request and response to the controller
+                     * By this way the controller has access to these two important stuff
+                     */
                     $controller->setRequest($this->getRequest());
                     $controller->setResponse($this->getResponse());
 
+                    /*
+                     * Call the action and get the result
+                     */
                     $viewModel = call_user_func(array($controller, $callableActionName));
 
                     if (!$viewModel instanceof Response) {
                         if (!$viewModel instanceof ViewModel\ViewModelInterface && !is_array($viewModel)) {
-                            throw new \Framework\Exception\ControllerException('Controller should return ViewModelInterface or array.');
+                            throw new \Framework\Exception\ControllerException('Controller should return Response, ViewModelInterface or array.');
                         }
                         if (!$viewModel instanceof ViewModel\ViewModelInterface && is_array($viewModel)) {
-                            $viewModel = $this->viewModelFactory($viewModel);
+                            /* When controller returns array we must interpret the Accept-type header of the request
+                             * and decide which type of ViewModel we need
+                             * Here ViewModel\ViewModelFactory implements Factory Pattern
+                             * to accomplish this
+                             */
+                            $vm = ViewModel\ViewModelFactory::getViewModel($this->getRequest());
+                            $vm->setData($viewModel);
+                            $viewModel = $vm;
                         }
                         $this->getResponse()->setContent($viewModel->render());
                     }
                     if (!$this->getResponse()->getStatusCode()) {
-                        $this->getResponse()->setStatusCode(200); //default
+                        $this->getResponse()->setStatusCode(200); //Default status code
                     }
+                    /*
+                     * Print the response to the client 
+                     */
                     $this->printResponse();
                 } else {
                     throw new \Framework\Exception\ControllerException('Action ' . $actionName . ' could not be executed on the controller');
@@ -161,6 +190,10 @@ class Application implements ApplicationInterface {
                 $this->catchError($e);
             }
         } else {
+            /*
+             * Router could not match to any controller
+             * We should return 404 status code and "Not found" text
+             */
             $this->setResponse(new Response());
             $this->getResponse()->setContent('Not found');
             $this->getResponse()->setStatusCode(404);
@@ -171,27 +204,15 @@ class Application implements ApplicationInterface {
     }
 
     protected function catchError(\Exception $e) {
-        
-        $viewModel = $this->viewModelFactory(array(
+
+        $viewModel = ViewModel\ViewModelFactory::getViewModel($this->getRequest());
+        $viewModel->setData(array(
             'code' => $e->getCode(),
             'message' => $e->getMessage()
         ));
 
         $this->setResponse($this->getResponseByViewModel($viewModel));
         $this->getResponse()->setStatusCode($e->getCode());
-    }
-
-    protected function viewModelFactory(array $data) {
-        switch ($this->getRequest()->getAcceptedFormat()) {
-            case Request::ACCEPT_XML:
-                $vm = new ViewModel\XMLViewModel();
-                break;
-            case Request::ACCEPT_JSON:
-                $vm = new ViewModel\JSONViewModel();
-                break;
-        }
-        $vm->setData($data);
-        return $vm;
     }
 
     protected function getResponseByViewModel(ViewModel\ViewModelInterface $viewModel) {

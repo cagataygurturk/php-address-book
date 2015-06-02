@@ -28,7 +28,21 @@ interface ConfigurationServiceInterface {
 
     public function __construct();
 
+    /**
+     * 
+     * Returns the configuration
+     *
+     * @return array
+     */
     public function setConfig(array $config);
 
+    /**
+     * 
+     * It sets the configuration for the service
+     * When a custom configuration is set, this method merges it with the default one
+     *
+     * @param array $config Configuration array
+     * @return void
+     */
     public function getConfig();
 }

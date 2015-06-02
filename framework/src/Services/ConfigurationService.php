@@ -20,7 +20,9 @@
 namespace Framework\Services;
 
 /**
- * Description of ConfigService
+ * ConfigurationService is used to get application configuration
+ * It merges the internal configuration that normally a user would not touch
+ * with the custom configuration defined by the user
  *
  * @author cagatay
  */
@@ -30,15 +32,37 @@ class ConfigurationService implements ConfigurationServiceInterface {
     private $defaultConfiguration;
 
     public function __construct() {
-        $this->defaultConfiguration = require __DIR__ . '/../../config/config.php'; //Internal configuration
+        /*
+         * Default configuration is loaded from config directory
+         * Even a custom configuration is not set, ConfigurationService always returns the default configuration
+         * needed by some internals of the framework
+         */
+        $this->defaultConfiguration = require __DIR__ . '/../../config/config.php';
         $this->config = $this->defaultConfiguration;
     }
 
+    /**
+     * 
+     * Returns the configuration
+     *
+     * @return array
+     */
     public function getConfig() {
         return $this->config;
     }
 
+    /**
+     * 
+     * It sets the configuration for the service
+     * When a custom configuration is set, this method merges it with the default one
+     *
+     * @param array $config Configuration array
+     * @return void
+     */
     public function setConfig(array $config) {
+        /*
+         * 
+         */
         $this->config = array_merge_recursive($this->defaultConfiguration, $config);
     }
 

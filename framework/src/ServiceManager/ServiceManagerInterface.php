@@ -30,5 +30,12 @@ interface ServiceManagerInterface {
 
     public function __construct(ConfigurationServiceInterface $configurationService);
 
+    /**
+     * 
+     * Returns the service instance by its name, creating it directly or via its factory
+     *
+     * @param string $serviceName Service name to call
+     * @return object
+     */
     public function get($serviceName);
 }

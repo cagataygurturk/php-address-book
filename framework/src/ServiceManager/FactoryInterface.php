@@ -26,5 +26,16 @@ namespace Framework\ServiceManager;
  */
 interface FactoryInterface {
 
+    /**
+     * 
+     * To create an instance of a service defined in service_manager['factories'] section of the configuration
+     * Service Manager invokes this method injecting itself into it.
+     * The factory, thus, can create the instance of the service and can call and inject other dependencies
+     * of this newly created service
+     * 
+     *
+     * @param ServiceManagerInterface $sm Service Manager (Locator) instance is always injected into factory by the Service Manager itself
+     * @return void
+     */
     public function getService(ServiceManagerInterface $sm);
 }
