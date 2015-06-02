@@ -38,6 +38,10 @@ class PeopleController extends RESTfulController {
         $this->personService = $personService;
     }
 
+    /*
+     * Responds for route /people/[:id]
+     */
+
     public function get($id) {
         try {
 
@@ -54,6 +58,10 @@ class PeopleController extends RESTfulController {
         }
     }
 
+    /*
+     * Responds for route /people
+     */
+
     public function getList() {
         try {
 
@@ -67,6 +75,10 @@ class PeopleController extends RESTfulController {
         }
     }
 
+    /*
+     * Responds for route /people, POST request
+     */
+
     public function create($data) {
         try {
             $person = $this->personService->insert($data['name'], $data['phone'], $data['address']);
@@ -78,6 +90,10 @@ class PeopleController extends RESTfulController {
             return $this->throwError($ex);
         }
     }
+
+    /*
+     * Responds for route /people/[:id], DELETE request
+     */
 
     public function delete($id) {
         try {

@@ -20,7 +20,8 @@
 namespace Application\MVC\Factories;
 
 /**
- * Description of PersonServiceFactory
+ * This factory creates a PeopleController instance and
+ * injects the PersonService as a dependency
  *
  * @author cagatay
  */

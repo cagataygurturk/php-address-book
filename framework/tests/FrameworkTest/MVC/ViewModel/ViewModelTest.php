@@ -19,7 +19,6 @@ class RouterTest extends PHPUnit_Framework_TestCase {
         
         $xmlViewModel = new \Framework\MVC\ViewModel\XMLViewModel(array('test' => array('test2')));
         $render = $xmlViewModel->render();
-        echo $render;
         $this->assertContains('<root>', $render);
         $this->assertContains('<test>', $render);
         $this->assertContains('<test>', $render);
