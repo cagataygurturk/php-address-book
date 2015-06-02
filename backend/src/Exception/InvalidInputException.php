@@ -20,10 +20,12 @@
 namespace Backend\Exception;
 
 /**
- * Description of IOException
+ * Description of InvalidInputException
  *
  * @author cagatay
  */
 class InvalidInputException extends Exception {
-    
+
+    protected $code = 400;
+
 }

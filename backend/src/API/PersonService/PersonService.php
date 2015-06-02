@@ -28,6 +28,7 @@ namespace Backend\API\PersonService;
  */
 use Backend\Infrastructure\Persistence\Repository\PersonRepositoryInterface;
 use Backend\Model\Person;
+use Backend\Exception\InvalidInputException;
 
 class PersonService implements PersonServiceInterface {
 
@@ -67,6 +68,9 @@ class PersonService implements PersonServiceInterface {
     /**
      * Insert person to the repository
      * 
+     * The business rules should be defined here. For now we are only checking
+     *  for null values and if the validation fails we throw an InvalidInputException that will give 400 (Bad Request) code
+     * 
      * @param string $name Name
      * @param string $phone Telephone 
      * @param string $address Address
@@ -74,6 +78,19 @@ class PersonService implements PersonServiceInterface {
      * @return Person;
      */
     public function insert($name, $phone, $address) {
+        if (!$name) {
+            throw new InvalidInputException('Name cannot be null');
+        }
+
+        if (!$phone) {
+            throw new InvalidInputException('Phone number cannot be null');
+        }
+
+        if (!$address) {
+            throw new InvalidInputException('Address cannot be null');
+        }
+
+
         $person = new Person();
         $person->setName($name);
         $person->setPhone($phone);
