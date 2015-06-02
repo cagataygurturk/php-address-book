@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/cagataygurturk/challenge.svg)](https://travis-ci.org/cagataygurturk/challenge)
+[![Build Status](https://travis-ci.org/cagataygurturk/php-address-book.svg)](https://travis-ci.org/cagataygurturk/php-address-book)
 
 People REST Service
 =========
