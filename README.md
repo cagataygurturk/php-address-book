@@ -38,6 +38,20 @@ And navigate to http://localhost:8000 by your favourite web browser or a REST cl
     /people [GET, POST]
     /people/[:id] [GET, DELETE]
 
+To add a new record send a POST request to
+
+    /people
+
+with 'name', 'phone' and 'id' fields. This will return the newly created object.
+
+To access to a person fire a GET request to
+
+    /people/1
+
+a DELETE request to the same endpoint will delete the record.
+
+Due to limitations of CSV datastore, the implementation of PUT request is not implemented and it will give 405 (Method Not Allowed) response.
+
 Structure
 =========
 
@@ -130,4 +144,4 @@ The application layer communicates with backend only using PersonService and the
 
 Data Access Layer is very flexible. Implementing EntityRepositoryInterface, the data storage mechanism can be changed without any modification on upper layers.
 
-HTTP application uses REST verbs and HTTP status codes for communicating with the client. For example, for a request that do not return any results, the client also gets 404 status code. For a deleted object it gives a 204 (No Content) status code. For better control on the status codes, the application uses exceptions. Every derived exception (like **Application\Exception\NotFoundException**) has a HTTP status code (default 500) in its \$code property. So, when an unhandles exception occurs for the MVC framework sends the \$code property of the thrown Exception. Actually it's very nice method to control HTTP status code that I love, also HHVM had a bug about this subject reported by me: https://github.com/facebook/hhvm/issues/4379 
+HTTP application uses REST verbs and HTTP status codes for communicating with the client. For example, for a request that do not return any results, the client also gets 404 status code. For a deleted object it gives a 204 (No Content) status code. For better control on the status codes, the application uses exceptions. Every derived exception (like **Application\Exception\NotFoundException**) has a HTTP status code (default 500) in its \$code property. So, when an unhandles exception occurs for the MVC framework sends the \$code property of the thrown Exception. Actually it's very nice method to control HTTP status code that I love, also HHVM had a bug about this subject reported by me: https://github.com/facebook/hhvm/issues/4379 There is a workaround about this issue that I have not implemented in this project therefore tests are failing in HHVM environment.
