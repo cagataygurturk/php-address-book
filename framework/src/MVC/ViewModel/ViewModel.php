@@ -24,9 +24,10 @@ namespace Framework\MVC\ViewModel;
  *
  * @author cagatay
  */
-abstract class ViewModel {
+abstract class ViewModel implements ViewModelInterface {
 
     protected $data = array();
+    protected $contentType = 'text/html';
 
     public function __construct(array $data = array()) {
         $this->setData($data);
@@ -34,6 +35,14 @@ abstract class ViewModel {
 
     public function setData(array $array) {
         $this->data = $array;
+    }
+
+    public function render() {
+        
+    }
+
+    public function getContentType() {
+        return $this->contentType;
     }
 
 }

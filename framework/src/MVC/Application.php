@@ -165,7 +165,7 @@ class Application implements ApplicationInterface {
                             throw new \Framework\Exception\ControllerException('Controller should return Response, ViewModelInterface or array.');
                         }
                         if (!$viewModel instanceof ViewModel\ViewModelInterface && is_array($viewModel)) {
-                            /* When controller returns array we must interpret the Accept-type header of the request
+                            /* When controller returns array we must interpret the Accept header of the request
                              * and decide which type of ViewModel we need
                              * Here ViewModel\ViewModelFactory implements Factory Pattern
                              * to accomplish this
@@ -174,6 +174,8 @@ class Application implements ApplicationInterface {
                             $vm->setData($viewModel);
                             $viewModel = $vm;
                         }
+
+                        $this->getResponse()->setContentType($viewModel->getContentType());
                         $this->getResponse()->setContent($viewModel->render());
                     }
                     if (!$this->getResponse()->getStatusCode()) {
@@ -227,6 +229,7 @@ class Application implements ApplicationInterface {
         }
 
         http_response_code($this->getResponse()->getStatusCode());
+        header('Content-type: ' . $this->getResponse()->getContentType());
         echo $this->getResponse()->getContent();
         return true;
     }

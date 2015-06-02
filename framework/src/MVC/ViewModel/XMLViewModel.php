@@ -26,31 +26,48 @@ namespace Framework\MVC\ViewModel;
  */
 class XMLViewModel extends ViewModel implements ViewModelInterface {
 
-    private function array2XML($data, $rootNodeName = 'results', $xml = NULL) {
-        if ($xml == null) {
-            $xml = simplexml_load_string("<?xml version='1.0' encoding='utf-8'?><$rootNodeName />");
+    protected $contentType = 'text/xml, application/xml';
+
+    private function get_real_class($obj) {
+        $classname = get_class($obj);
+
+        if (preg_match('@\\\\([\w]+)$@', $classname, $matches)) {
+            $classname = $matches[1];
         }
 
-        foreach ($data as $key => $value) {
-            if (is_numeric($key)) {
-                $key = "nodeId_" . (string) $key;
-            }
+        return $classname;
+    }
 
-            if (is_array($value)) {
-                $node = $xml->addChild($key);
-                $this->array2XML($value, $rootNodeName, $node);
+    protected function objectToXMLString($object) {
+        if (!method_exists($object, 'xmlSerialize')) {
+            return null;
+        }
+        $data = $object->xmlSerialize();
+        $name = $this->get_real_class($object);
+        $string = '<' . $name . '>';
+        foreach ($data as $attr => $value) {
+            $string.='<' . $attr . '>' . $value . '</' . $attr . '>';
+        }
+        $string .= '</' . $name . '>';
+
+        return $string;
+    }
+
+    public function getNode($data, $nodeName) {
+        $string = '<?xml version="1.0" encoding="UTF-8"?><' . $nodeName . '>';
+        foreach ($data as $key => $object) {
+            if (is_array($object)) {
+                $string.=$this->getNode($object, $key);
             } else {
-                $value = htmlentities($value);
-                $xml->addChild($key, $value);
+                $string.=$this->objectToXMLString($object);
             }
         }
-
-        return html_entity_decode($xml->asXML());
+        $string.= '</' . $nodeName . '>';
+        return $string;
     }
 
     public function render() {
-
-        return $this->array2XML($this->data);
+        return $this->getNode($this->data, 'root');
     }
 
 }

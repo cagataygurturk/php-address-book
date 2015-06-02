@@ -27,4 +27,6 @@ namespace Framework\MVC\ViewModel;
 interface ViewModelInterface {
 
     public function render();
+
+    public function getContentType();
 }

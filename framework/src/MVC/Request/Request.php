@@ -92,7 +92,7 @@ class Request implements RequestInterface {
             $request->setMethod($method);
         }
 
-        $acceptType = (isset($config['accept-type']) ? $config['accept-type'] : (isset($_SERVER['HTTP_ACCEPT']) ? $_SERVER['HTTP_ACCEPT'] : null));
+        $acceptType = (isset($config['accept']) ? $config['accept'] : (isset($_SERVER['HTTP_ACCEPT']) ? $_SERVER['HTTP_ACCEPT'] : null));
         if ($acceptType) {
             $request->setAcceptType($acceptType);
         }
@@ -213,7 +213,7 @@ class Request implements RequestInterface {
     }
 
     /**
-     * Get request Accept-Type header
+     * Get request Accept header
      *
      * @return string
      */

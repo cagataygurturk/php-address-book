@@ -26,6 +26,8 @@ namespace Framework\MVC\ViewModel;
  */
 class JSONViewModel extends ViewModel implements ViewModelInterface {
 
+    protected $contentType = 'application/javascript';
+
     public function render() {
         return json_encode($this->data);
     }

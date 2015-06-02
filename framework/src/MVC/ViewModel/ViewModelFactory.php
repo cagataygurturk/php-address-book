@@ -31,7 +31,7 @@ class ViewModelFactory {
     /**
      * 
      * This class implements Factory Pattern to decide which implementation of ViewModel should create
-     * according to the Accept-Type header of the request
+     * according to the Accept header of the request
      * 
      *
      * @param Request $request Request type

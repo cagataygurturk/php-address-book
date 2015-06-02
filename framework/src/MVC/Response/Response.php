@@ -26,6 +26,7 @@ namespace Framework\MVC\Response;
  */
 class Response implements ResponseInterface {
 
+    protected $contentType = 'text/html';
     protected $statusCode;
     protected $content;
     protected $status_codes = array(
@@ -110,6 +111,14 @@ class Response implements ResponseInterface {
 
     public function __toString() {
         return $this->content;
+    }
+
+    public function setContentType($contentType) {
+        $this->contentType = $contentType;
+    }
+
+    public function getContentType() {
+        return $this->contentType;
     }
 
 }
