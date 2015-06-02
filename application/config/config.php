@@ -3,7 +3,7 @@
 return array(
     /* Service manager configuration */
     'service_manager' => array(
-        'aliases' => array(),
+        'invokables' => array(),
         'factories' => array(
             'Application\Services\PersonService' => 'Application\Services\Factories\PersonServiceFactory'
         )
