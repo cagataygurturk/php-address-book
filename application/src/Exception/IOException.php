@@ -20,12 +20,10 @@
 namespace Application\Exception;
 
 /**
- * Description of IOException
+  IOException
  *
  * @author cagatay
  */
 class IOException extends \Framework\Exception\Exception {
-
-    protected $code = 500;
-
+    
 }
