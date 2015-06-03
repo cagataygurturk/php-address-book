@@ -3,7 +3,7 @@
 People REST Service
 =========
 
-People Book is a small but overengineered PHP application that only aims to show how to implement a basic MVC framework with Routing, Service Locator and REST support and seperate business and data layers like DDD in PHP.
+Address Book is a small but overengineered example PHP application that only aims to show how to implement a basic MVC framework with Routing, Service Locator and REST support and seperate business and data layers like DDD in PHP.
 
 Installation
 =========
